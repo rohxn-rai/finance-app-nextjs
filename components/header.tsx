@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ModeToggle } from "@/components/ui/theme-toggle";
 
 const Header = ({ className }: { className?: string }) => {
   return (
@@ -13,7 +14,7 @@ const Header = ({ className }: { className?: string }) => {
       </Link>
 
       <div className="flex items-center gap-4">
-        <div>Mode Toggle</div>
+        <ModeToggle />
         <div>User Dropdown</div>
       </div>
     </header>
