@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import TransactionItem from "@/components/transaction-item";
 import Trend from "@/components/Trend";
 
