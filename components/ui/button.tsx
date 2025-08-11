@@ -33,7 +33,8 @@ const buttonVariants = cva(
           "hover:bg-destructive/90 ",
           "focus-visible:ring-destructive/20 ",
           "dark:focus-visible:ring-destructive/40 ",
-          "dark:bg-destructive/60"
+          "dark:bg-destructive/60 ",
+          "dark:hover:bg-destructive/90"
         ),
         outline: cn(
           "border bg-background shadow-xs ",
@@ -52,7 +53,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        xs: "h-6 rounded-md gap-1 px-2 has-[>svg]:px-2",
+        xs: "h-6 rounded-md gap-1 px-2 has-[>svg]:px-2 text-xs",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
