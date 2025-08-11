@@ -1,5 +1,6 @@
 import Header from "@/components/header";
 import TransactionItem from "@/components/transaction-item";
+import TransactionSummaryItem from "@/components/transaction-summary-item";
 import Trend from "@/components/Trend";
 
 const PlaygroundPage = () => {
@@ -49,6 +50,47 @@ const PlaygroundPage = () => {
           />
         </div>
       </div>
+
+      <div>
+        <h2 className="mb-4 text-lg font-mono">
+          Transaction Summary Item + Transaction Item
+        </h2>
+        <hr className="mb-4 border-gray-200 dark:border-y-gray-800" />
+        <div className="flex flex-col gap-4">
+          <TransactionSummaryItem date="2025-08-11" amount={1000} />
+          <hr className="mb-4 border-gray-200 dark:border-y-gray-800" />
+          <TransactionItem type="Income" description="Salary" amount={2000} />
+          <TransactionItem
+            type="Expense"
+            category="Food"
+            description="Going out to eat"
+            amount={29}
+          />
+          <TransactionItem
+            type="Saving"
+            description="For children"
+            amount={500}
+          />
+          <TransactionItem
+            type="Investment"
+            description="In Microsoft"
+            amount={9000}
+          />
+        </div>
+      </div>
+
+      {/*
+       <div>
+        <h2 className="mb-4 text-lg font-mono">Component</h2>
+        <hr className="mb-4 border-gray-200 dark:border-y-gray-800" />
+        <div className="flex flex-row gap-8">
+          <Component />
+          <Component />
+          <Component />
+          <Component />
+        </div>
+      </div>
+       */}
     </main>
   );
 };
