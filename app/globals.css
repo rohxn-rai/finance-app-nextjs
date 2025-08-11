@@ -3,7 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body {
+main {
   @apply container mx-auto p-3 max-w-4xl bg-white text-black dark:bg-slate-950 dark:text-slate-100;
 }
 
@@ -110,7 +110,7 @@ body {
 
   --accent-foreground: oklch(0.208 0.042 265.755);
 
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(62.826% 0.25721 28.495);
 
   --border: oklch(0.929 0.013 255.508);
 
@@ -174,7 +174,7 @@ body {
 
   --accent-foreground: oklch(0.984 0.003 247.858);
 
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: oklch(64.358% 0.24201 26.971);
 
   --border: oklch(1 0 0 / 10%);
 
