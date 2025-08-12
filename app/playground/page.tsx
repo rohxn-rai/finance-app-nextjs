@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 import TransactionItem from "@/components/transaction-item";
 import TransactionSummaryItem from "@/components/transaction-summary-item";
-import Trend from "@/components/Trend";
+import Trend from "@/components/trend";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
