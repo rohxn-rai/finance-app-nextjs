@@ -38,8 +38,8 @@ const TransactionItem = ({
   const formattedAmount = useFormatCurrency(amount);
 
   return (
-    <div className="w-full flex items-center">
-      <div className="flex items-center mr-4 grow">
+    <li className="w-full flex flex-row gap-4 items-center">
+      <div className="flex items-center grow">
         <IconComponent className={`${colors} mr-2 w-4 h-4 hidden md:block`} />
         <span>{description}</span>
       </div>
@@ -51,7 +51,7 @@ const TransactionItem = ({
       <div className="min-w-[70px] text-right">{formattedAmount}</div>
 
       <div className="min-w-[50px] flex justify-end">...</div>
-    </div>
+    </li>
   );
 };
 
