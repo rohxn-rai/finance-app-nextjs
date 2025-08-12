@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 import TransactionItem from "@/components/transaction-item";
 import TransactionSummaryItem from "@/components/transaction-summary-item";
-import Trend from "@/components/trend";
+import BaseTrend from "@/components/base-trend";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -35,10 +35,10 @@ const PlaygroundPage = () => {
         <h2 className="mb-4 text-lg font-mono">Trend</h2>
         <Separator />
         <div className="flex flex-row gap-8">
-          <Trend type="Income" amount={1000} prevAmount={900} />
-          <Trend type="Expense" amount={12000} prevAmount={10000} />
-          <Trend type="Investment" amount={7000} prevAmount={11100} />
-          <Trend type="Saving" amount={500} prevAmount={950} />
+          <BaseTrend type="Income" amount={1000} prevAmount={900} />
+          <BaseTrend type="Expense" amount={12000} prevAmount={10000} />
+          <BaseTrend type="Investment" amount={7000} prevAmount={11100} />
+          <BaseTrend type="Saving" amount={500} prevAmount={950} />
         </div>
       </div>
 
