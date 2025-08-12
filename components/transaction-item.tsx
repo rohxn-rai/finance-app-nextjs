@@ -1,5 +1,6 @@
 import useFormatCurrency from "@/hooks/use-format-currency";
 import { HandCoins, Landmark, PiggyBank, Wallet } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const TransactionItem = ({
   type,
@@ -44,11 +45,7 @@ const TransactionItem = ({
       </div>
 
       <div className="min-w-[150px] items-center hidden md:flex">
-        {category && (
-          <div className="rounded-md text-xs bg-gray-700 dark:bg-gray-100 dark:text-black px-2 py-0.5">
-            {category}
-          </div>
-        )}
+        {category && <Badge>{category}</Badge>}
       </div>
 
       <div className="min-w-[70px] text-right">{formattedAmount}</div>
