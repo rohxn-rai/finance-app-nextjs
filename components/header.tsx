@@ -7,7 +7,7 @@ const Header = ({ className }: { className?: string }) => {
       className={`flex flex-row justify-between items-center ${className}`}
     >
       <Link
-        href="dashboard"
+        href="/dashboard"
         className="text-xl hover:underline underline-offset-8 decoration-2"
       >
         Finance App

@@ -17,8 +17,9 @@
 /.next/
 /out/
 
-# vscode settings
+# vscode settings / .idea
 .vscode
+.idea
 
 # production
 /build

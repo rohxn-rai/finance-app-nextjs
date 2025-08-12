@@ -1,7 +1,4 @@
 import type { Transaction } from "@/types/transaction";
-import TransactionItem from "@/components/transaction-item";
-import TransactionSummaryItem from "./transaction-summary-item";
-import { Separator } from "@/components/ui/separator";
 import TransactionSubList from "./transaction-sub-list";
 
 interface Group {
@@ -56,7 +53,7 @@ const TransactionList = async () => {
   const sortedEntries = getSortedGroupedEntries(grouped);
 
   return (
-    <div className="flex flex-col gap-8">
+    <section className="flex flex-col gap-8">
       {sortedEntries.map(([date, { transactions, amount }]) => (
         <div key={date}>
           <TransactionSubList
@@ -66,7 +63,7 @@ const TransactionList = async () => {
           />
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 
