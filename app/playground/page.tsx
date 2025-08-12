@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PlaygroundPage = () => {
   return (
@@ -23,7 +25,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Page Header</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div>
           <Header />
         </div>
@@ -31,7 +33,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Trend</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-row gap-8">
           <Trend type="Income" amount={1000} prevAmount={900} />
           <Trend type="Expense" amount={12000} prevAmount={10000} />
@@ -42,7 +44,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Transaction Item</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-col gap-4">
           <TransactionItem type="Income" description="Salary" amount={2000} />
           <TransactionItem
@@ -68,10 +70,10 @@ const PlaygroundPage = () => {
         <h2 className="mb-4 text-lg font-mono">
           Transaction Summary Item + Transaction Item
         </h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-col gap-4">
           <TransactionSummaryItem date="2025-08-11" amount={3500} />
-          <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+          <Separator />
           <TransactionItem type="Income" description="Salary" amount={2000} />
           <TransactionItem
             type="Expense"
@@ -94,7 +96,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Button</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-col gap-4">
           <h3>Variants</h3>
           <div className="flex flex-row gap-4 h-16 items-center">
@@ -117,7 +119,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Form</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1">
             <Label htmlFor="name">Your Name</Label>
@@ -151,7 +153,7 @@ const PlaygroundPage = () => {
 
       <div>
         <h2 className="mb-4 text-lg font-mono">Checkbox</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-col gap-8">
           <div className="flex flex-row gap-2 ml-3">
             <Checkbox id="check-box-unchecked" className="cursor-pointer" />
@@ -208,10 +210,27 @@ const PlaygroundPage = () => {
         </div>
       </div>
 
+      <div>
+        <h2 className="mb-4 text-lg font-mono">Skeleton</h2>
+        <Separator />
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-row gap-4">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+          <div className="flex flex-col gap-4">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+        </div>
+      </div>
+
       {/*
        <div>
         <h2 className="mb-4 text-lg font-mono">Component</h2>
-        <hr className="mb-8 border-gray-200 dark:border-y-gray-800" />
+        <Separator />
         <div className="flex flex-row gap-8">
           <Component />
           <Component />
