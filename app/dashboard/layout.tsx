@@ -3,9 +3,9 @@ import Header from "@/components/header";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Header className="mt-8" />
-      <main>{children}</main>
-      <footer>Footer</footer>
+      <Header className="my-8" />
+      <>{children}</>
+      <footer className="mt-auto text-center py-8">Footer</footer>
     </>
   );
 };
