@@ -1,4 +1,5 @@
 import useFormatCurrency from "@/hooks/use-format-currency";
+import { cn } from "@/lib/utils";
 
 const TransactionSummaryItem = ({
   date,
@@ -10,7 +11,12 @@ const TransactionSummaryItem = ({
   const formattedAmount = useFormatCurrency(amount);
 
   return (
-    <div className="flex text-gray-500 dark:text-gray-400 font-semibold">
+    <div
+      className={cn(
+        "flex flex-row gap-4 text-gray-500 ",
+        "dark:text-gray-400 font-semibold"
+      )}
+    >
       <div className="grow">{date}</div>
 
       <div className="min-w-[70px] text-right font-semibold">
