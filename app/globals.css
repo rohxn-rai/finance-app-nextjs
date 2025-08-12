@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 main {
-  @apply container mx-auto px-3 max-w-4xl bg-white text-black dark:bg-slate-950 dark:text-slate-100;
+  @apply container mx-auto max-w-4xl bg-white text-black dark:bg-slate-950 dark:text-slate-100;
 }
 
 @theme inline {
