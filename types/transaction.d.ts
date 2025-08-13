@@ -1,9 +1,8 @@
-export type TypesOfTransaction =
+export type TypeOfTransaction =
   "Income" |
   "Expense" |
   "Investment" |
   "Saving";
-
 
 export type CategoryOfTransaction =
   "Housing" |
@@ -14,11 +13,10 @@ export type CategoryOfTransaction =
   "Other" |
   "";
 
-
 export interface Transaction {
   id : number;
   amount : number;
-  type : TypesOfTransaction
+  type : TypeOfTransaction
   description : string;
   category : CategoryOfTransaction;
   created_at : string;

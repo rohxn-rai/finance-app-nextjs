@@ -1,10 +1,10 @@
 import BaseTrend from "@/components/base-trend";
-import { TypesOfTransaction } from "@/types/transaction";
+import { TypeOfTransaction } from "@/types/transaction";
 
 const Trend = async ( {
   type,
 } : {
-  type : TypesOfTransaction;
+  type : TypeOfTransaction;
 } ) => {
   const response = await fetch ( `http://localhost:3100/trends/${ type }` );
   

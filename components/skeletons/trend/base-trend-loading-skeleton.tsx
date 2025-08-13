@@ -1,8 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { TypesOfTransaction } from "@/types/transaction";
+import { TypeOfTransaction } from "@/types/transaction";
 
 const BaseTrendLoadingSkeleton = ( { type } : {
-  type : TypesOfTransaction;
+  type : TypeOfTransaction;
 } ) => {
   const colorClasses = {
     Income : "text-green-700 dark:text-green-300",

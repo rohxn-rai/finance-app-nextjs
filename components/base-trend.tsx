@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TypesOfTransaction } from "@/types/transaction";
+import { TypeOfTransaction } from "@/types/transaction";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import useFormatCurrency from "@/hooks/use-format-currency";
 
@@ -8,7 +8,7 @@ const BaseTrend = ( {
   amount,
   prevAmount,
 } : {
-  type : TypesOfTransaction;
+  type : TypeOfTransaction;
   amount : number;
   prevAmount? : number;
 } ) => {

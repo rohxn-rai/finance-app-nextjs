@@ -20,7 +20,7 @@ const ModeToggle = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="outline" size="icon">
           <Sun
             className={ cn (
               "h-[1.2rem] w-[1.2rem] scale-100 rotate-0 ",

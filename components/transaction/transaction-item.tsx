@@ -1,4 +1,4 @@
-import { CategoryOfTransaction, TypesOfTransaction } from "@/types/transaction";
+import { CategoryOfTransaction, TypeOfTransaction } from "@/types/transaction";
 import useFormatCurrency from "@/hooks/use-format-currency";
 import { HandCoins, Landmark, PiggyBank, Wallet } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +9,7 @@ const TransactionItem = ( {
   description,
   amount,
 } : {
-  type : TypesOfTransaction;
+  type : TypeOfTransaction;
   category? : CategoryOfTransaction;
   description : string;
   amount : number;
