@@ -1,6 +1,6 @@
 import TransactionItemLoadingSkeleton
   from "@/components/skeletons/transactions/transaction-list-loading-skeleton";
-import TransactionList from "@/components/transaction-list";
+import TransactionList from "@/components/transaction/transaction-list";
 import TrendSetLoadingSkeleton
   from "@/components/skeletons/trend/trend-set-loading-skeleton";
 
