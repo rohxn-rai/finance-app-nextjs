@@ -13,7 +13,7 @@
       "amount": 159,
       "type": "Expense",
       "description": "Gas",
-      "category": "Car",
+      "category": "Transport",
       "created_at": "2023-03-15T23:00:00"
     },
     {

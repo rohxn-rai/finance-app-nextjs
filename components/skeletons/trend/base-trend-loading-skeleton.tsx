@@ -1,18 +1,19 @@
-import {Skeleton} from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TypesOfTransaction } from "@/types/transaction";
 
-const BaseTrendLoadingSkeleton = ({type}: {
-  type: "Income" | "Expense" | "Investment" | "Saving";
-}) => {
+const BaseTrendLoadingSkeleton = ( { type } : {
+  type : TypesOfTransaction;
+} ) => {
   const colorClasses = {
-    Income: "text-green-700 dark:text-green-300",
-    Expense: "text-red-700 dark:text-red-300",
-    Investment: "text-indigo-700 dark:text-indigo-300",
-    Saving: "text-yellow-700 dark:text-yellow-300",
+    Income : "text-green-700 dark:text-green-300",
+    Expense : "text-red-700 dark:text-red-300",
+    Investment : "text-indigo-700 dark:text-indigo-300",
+    Saving : "text-yellow-700 dark:text-yellow-300",
   };
   
   return (
     <div>
-      <div className={`font-semibold ${colorClasses[type]}`}>{type}</div>
+      <div className={ `font-semibold ${ colorClasses[type] }` }>{ type }</div>
       <div className="mb-2">
         <Skeleton className="w-full h-8"/>
       </div>
