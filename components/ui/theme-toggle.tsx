@@ -15,36 +15,36 @@ import {
 import { cn } from "@/lib/utils";
 
 const ModeToggle = () => {
-  const { setTheme } = useTheme();
-
+  const { setTheme } = useTheme ();
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon">
           <Sun
-            className={cn(
+            className={ cn (
               "h-[1.2rem] w-[1.2rem] scale-100 rotate-0 ",
               "transition-all dark:scale-0 dark:-rotate-90"
-            )}
+            ) }
           />
           <Moon
-            className={cn(
+            className={ cn (
               "absolute h-[1.2rem] w-[1.2rem] scale-0 ",
               "rotate-90 transition-all dark:scale-100 ",
               "dark:rotate-0"
-            )}
+            ) }
           />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={ () => setTheme ( "light" ) }>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={ () => setTheme ( "dark" ) }>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={ () => setTheme ( "system" ) }>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
