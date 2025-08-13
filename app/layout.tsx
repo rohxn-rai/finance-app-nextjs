@@ -4,32 +4,37 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter ( { subsets : [ "latin" ] } );
 
-export const metadata: Metadata = {
-  title: "Finance App",
-  description: "Create and manage your finances!",
+export const metadata : Metadata = {
+  title : {
+    template : "%s | Finance App",
+    default : "Finance App"
+  },
+  description : "Create and manage your finances!",
 };
 
-export default function RootLayout({
+const RootLayout = ( {
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+} : Readonly<{
+  children : React.ReactNode;
+}> ) => {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.className} min-h-screen px-8 flex flex-col antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main>{children}</main>
-        </ThemeProvider>
-      </body>
+    <body
+      className={ `${ inter.className } min-h-screen px-8 flex flex-col antialiased` }
+    >
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <main>{ children }</main>
+    </ThemeProvider>
+    </body>
     </html>
   );
 }
+
+export default RootLayout;
