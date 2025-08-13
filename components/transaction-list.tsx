@@ -1,4 +1,4 @@
-import type { Transaction } from "@/types/transaction";
+import type {Transaction} from "@/types/transaction";
 import TransactionSubList from "./transaction-sub-list";
 
 interface Group {
@@ -25,7 +25,7 @@ const groupAndSumTransactionsByDate = (transactions: Transaction[]) => {
       transaction.type === "Expense" ? -transaction.amount : transaction.amount;
     grouped[date].amount += amount;
   }
-
+  
   return grouped;
 };
 
@@ -43,18 +43,16 @@ const getSortedGroupedEntries = (
 };
 
 const TransactionList = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   const response = await fetch("http://localhost:3100/transactions");
-
+  
   const transactions: Transaction[] = await response.json();
-
+  
   const grouped = groupAndSumTransactionsByDate(transactions);
   const sortedEntries = getSortedGroupedEntries(grouped);
-
+  
   return (
     <section className="flex flex-col gap-8">
-      {sortedEntries.map(([date, { transactions, amount }]) => (
+      {sortedEntries.map(([date, {transactions, amount}]) => (
         <div key={date}>
           <TransactionSubList
             date={date}
