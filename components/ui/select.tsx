@@ -78,7 +78,8 @@ const SelectContent = ( {
   ...props
 } : React.ComponentProps<typeof SelectPrimitive.Content> ) => {
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal container={ null }
+    >
       <SelectPrimitive.Content
         data-slot="select-content"
         className={ cn (
@@ -91,9 +92,9 @@ const SelectContent = ( {
           "data-[side=left]:slide-in-from-right-2 ",
           "data-[side=right]:slide-in-from-left-2 ",
           "data-[side=top]:slide-in-from-bottom-2 ",
-          "relative z-50 ",
+          "relative z-50 border ",
           "max-h-(--radix-select-content-available-height) ",
-          "min-w-[8rem] ",
+          "min-w-[8rem] border-input",
           "origin-(--radix-select-content-transform-origin) ",
           "overflow-x-hidden overflow-y-auto ",
           "rounded-md shadow-lg",

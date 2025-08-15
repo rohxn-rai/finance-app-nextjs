@@ -40,6 +40,9 @@ const DropdownMenuContent = ( {
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
+        onWheel={ ( e ) => {
+          e.stopPropagation ();
+        } }
         data-slot="dropdown-menu-content"
         sideOffset={ sideOffset }
         className={ cn (
@@ -54,7 +57,7 @@ const DropdownMenuContent = ( {
           "data-[side=left]:slide-in-from-right-2 ",
           "data-[side=right]:slide-in-from-left-2 ",
           "data-[side=top]:slide-in-from-bottom-2 ",
-          "z-50 ",
+          "z-50 border border-input",
           "max-h-(--radix-dropdown-menu-content-available-height) ",
           "min-w-[8rem] ",
           "origin-(--radix-dropdown-menu-content-transform-origin) ",
