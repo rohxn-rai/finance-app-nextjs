@@ -1,5 +1,6 @@
 import type { Transaction } from "@/types/transaction";
-import TransactionSubList from "./transaction-sub-list";
+import TransactionSubList from "@/components/transaction/transaction-sub-list";
+import axios from "axios"
 
 interface Group {
   transactions : Transaction[];
@@ -43,9 +44,9 @@ const getSortedGroupedEntries = (
 };
 
 const TransactionList = async () => {
-  const response = await fetch ( `${ process.env.API_URL }/transactions`, );
+  const response = await axios.get ( `${ process.env.API_URL }/transactions`, );
   
-  const transactions : Transaction[] = await response.json ();
+  const transactions : Transaction[] = await response.data
   
   const grouped = groupAndSumTransactionsByDate ( transactions );
   const sortedEntries = getSortedGroupedEntries ( grouped );
