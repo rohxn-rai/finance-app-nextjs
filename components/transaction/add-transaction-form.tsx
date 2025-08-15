@@ -1,9 +1,16 @@
 "use client"
 
+import { useState } from "react";
+
 import {
   CATEGORYOFTRANSACTION,
   TYPEOFTRANSACTION
 } from "@/constants/all-consts";
+import {
+  CategoryOfTransaction,
+  Transaction,
+  TypeOfTransaction
+} from "@/types/transaction";
 
 import {
   Select,
@@ -16,8 +23,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/ui/date-picker";
-
-import { useForm } from "react-hook-form"
 import {
   Form,
   FormField,
@@ -25,10 +30,11 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import { z } from "zod";
+import { toast } from "sonner"
+
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import { CategoryOfTransaction, TypeOfTransaction } from "@/types/transaction";
+import { z } from "zod";
 
 const FormSchema = z.object ( {
   type : z.enum ( TYPEOFTRANSACTION, "Choose a type from the given options." ),
@@ -42,14 +48,17 @@ const FormSchema = z.object ( {
       message : "Amount must be a valid number."
     } ),
   description : z.string ( "Enter proper description." )
-    .min ( 1, "Description is required" )
+    .min ( 1, "Description is required." )
     .max ( 64, "Description can not exceed 64 characters." )
 } );
 
 const AddTransactionForm = () => {
+  const [ isSaving, setIsSaving ] = useState ( false );
+  const [ isResetting, setIsResetting ] = useState ( false );
+  
   const form = useForm<z.infer<typeof FormSchema>> ( {
     resolver : zodResolver ( FormSchema ),
-    mode : "onBlur",
+    mode : "all",
     defaultValues : {
       type : "" as TypeOfTransaction,
       category : "" as CategoryOfTransaction,
@@ -60,33 +69,56 @@ const AddTransactionForm = () => {
     reValidateMode : "onBlur"
   } );
   
-  const onSubmit = (
+  const onSubmit = async (
     data : z.infer<typeof FormSchema>
   ) => {
-    const submitData = {
+    setIsSaving ( true )
+    
+    const submitData : Transaction = {
       ...data,
+      id : Math.random (),
       amount : parseFloat ( data.amount )
     };
     
-    toast ( "You submitted the following values", {
-      description : (
-        <pre>
-        <code className="text-white">
-          { JSON.stringify ( submitData, null, 2 ) }
-        </code>
-      </pre>
-      ),
+    const addingData = async ( data : Transaction ) => {
+      await
+        fetch ( `${ process.env.NEXT_PUBLIC_API_URL }/transactions`, {
+          method : "POST",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify ( data )
+        }, )
+    }
+    
+    toast.promise ( addingData ( submitData ), {
+      loading : "Adding transaction ...",
+      success : "Transaction has been added.",
+      error : "Error"
     } );
+    setIsSaving ( false )
   };
   
-  const handleReset = () => {
-    form.reset ( {
-      type : undefined,
-      category : undefined,
-      created_at : undefined,
-      amount : "",
-      description : undefined
-    } );
+  const handleReset = async () => {
+    setIsResetting ( true )
+    
+    const resetForm = async () => {
+      form.reset ( {
+        type : undefined,
+        category : undefined,
+        created_at : "",
+        amount : "",
+        description : ""
+      } )
+    }
+    
+    toast.promise ( resetForm (), {
+      loading : 'Adding transaction ...',
+      success : "Reset the form!",
+      error : 'Error'
+    } )
+    
+    setIsResetting ( false )
   }
   
   return (
@@ -219,13 +251,15 @@ const AddTransactionForm = () => {
                       variant="destructive"
                       type="button"
                       onClick={ handleReset }
+                      disabled={ isSaving || isResetting }
               >
-                Reset
+                { isResetting ? "Resetting ..." : "Reset" }
               </Button>
               <Button className="cursor-pointer"
                       type="submit"
+                      disabled={ isSaving || isResetting }
               >
-                Save
+                { isSaving ? "Saving ..." : "Save" }
               </Button>
             </div>
           </div>

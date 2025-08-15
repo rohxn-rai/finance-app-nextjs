@@ -47,7 +47,7 @@ const TransactionItem = ( {
       </div>
       
       <div className="min-w-[150px] items-center hidden md:flex">
-        { category && <Badge>{ category }</Badge> }
+        { category !== "Other" && <Badge>{ category }</Badge> }
       </div>
       
       <div className="min-w-[70px] text-right">{ formattedAmount }</div>

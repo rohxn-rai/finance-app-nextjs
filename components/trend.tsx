@@ -1,15 +1,15 @@
 import BaseTrend from "@/components/base-trend";
 import { TypeOfTransaction } from "@/types/transaction";
-import axios from "axios";
 
 const Trend = async ( {
   type,
 } : {
   type : TypeOfTransaction;
 } ) => {
-  const response = await axios.get ( `${ process.env.API_URL }/trends/${ type }` );
+  const response = await fetch (
+    `${ process.env.NEXT_PUBLIC_API_URL }/trends/${ type }` );
   
-  const { amount, prevAmount } = await response.data;
+  const { amount, prevAmount } = await response.json ();
   return <BaseTrend type={ type } amount={ amount } prevAmount={ prevAmount }/>;
 };
 

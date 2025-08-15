@@ -51,7 +51,8 @@ const DatePicker = ( {
           data-empty={ !dateValue }
           className={ cn (
             "data-[empty=true]:text-muted-foreground ",
-            "justify-between text-left font-normal" ) }
+            "justify-between text-left ",
+            "font-normal cursor-pointer" ) }
         >
           { dateValue ? format ( dateValue, "PPP" ) : <span>Pick a date</span> }
           <CalendarIcon/>
