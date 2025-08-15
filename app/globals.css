@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  @apply px-8
+}
+
 body {
   @apply bg-white text-black dark:bg-slate-950 dark:text-slate-100;
 }

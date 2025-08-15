@@ -1,8 +1,9 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import React from "react";
+import { Toaster } from "@/components/ui/sonner"
 
 const inter = Inter ( { subsets : [ "latin" ] } );
 
@@ -22,7 +23,7 @@ const RootLayout = ( {
   return (
     <html lang="en" suppressHydrationWarning>
     <body
-      className={ `${ inter.className } min-h-screen px-8 flex flex-col antialiased` }
+      className={ `${ inter.className } min-h-screen flex flex-col antialiased` }
     >
     <ThemeProvider
       attribute="class"
@@ -31,6 +32,7 @@ const RootLayout = ( {
       disableTransitionOnChange
     >
       <main>{ children }</main>
+      <Toaster position="top-right" richColors/>
     </ThemeProvider>
     </body>
     </html>
