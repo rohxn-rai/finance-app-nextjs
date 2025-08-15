@@ -186,7 +186,7 @@ const PlaygroundPage = () => {
             htmlFor="wrapped-check-box"
             className={ cn (
               "hover:bg-accent/50 flex items-start ",
-              "gap-3 rounded-lg border p-3 ml-0",
+              "gap-3 rounded-lg border border-input p-3 ml-0",
               "has-[[aria-checked=true]]:border-blue-600 ",
               "has-[[aria-checked=true]]:bg-blue-50 ",
               "dark:has-[[aria-checked=true]]:border-blue-900 ",
