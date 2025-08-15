@@ -8,9 +8,10 @@ export const metadata : Metadata = {
 
 const AddTransactionPage = () => {
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <h1 className="text-4xl font-semibold mb-8">Add Transaction</h1>
-    </>
+      <AddTransactionForm/>
+    </div>
   )
 }
 
