@@ -10,8 +10,7 @@ export type CategoryOfTransaction =
   "Health" |
   "Food" |
   "Education" |
-  "Other" |
-  "";
+  "Other";
 
 export interface Transaction {
   id : number;
