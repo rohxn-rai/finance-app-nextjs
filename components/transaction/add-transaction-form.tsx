@@ -1,6 +1,10 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import revalidateTransactionListAction
+  from "@/action/revalidate-transaction-list-action";
 
 import {
   CATEGORYOFTRANSACTION,
@@ -38,7 +42,10 @@ import { z } from "zod";
 
 const FormSchema = z.object ( {
   type : z.enum ( TYPEOFTRANSACTION, "Choose a type from the given options." ),
-  category : z.enum ( CATEGORYOFTRANSACTION, "Choose a category from the given options." ),
+  category : z.enum (
+    CATEGORYOFTRANSACTION,
+    "Choose a category from the given options."
+  ),
   created_at : z.iso.datetime ( "Enter a valid date." ),
   amount : z.string ()
     .min ( 1, "Amount is required." )
@@ -55,6 +62,8 @@ const FormSchema = z.object ( {
 const AddTransactionForm = () => {
   const [ isSaving, setIsSaving ] = useState ( false );
   const [ isResetting, setIsResetting ] = useState ( false );
+  
+  const router = useRouter ()
   
   const form = useForm<z.infer<typeof FormSchema>> ( {
     resolver : zodResolver ( FormSchema ),
@@ -89,6 +98,8 @@ const AddTransactionForm = () => {
           },
           body : JSON.stringify ( data )
         }, )
+      await revalidateTransactionListAction ()
+      router.push ( "/dashboard" )
     }
     
     toast.promise ( addingData ( submitData ), {
