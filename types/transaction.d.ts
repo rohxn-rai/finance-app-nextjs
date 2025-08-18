@@ -18,5 +18,5 @@ export interface Transaction {
   type : TypeOfTransaction
   description : string;
   category : CategoryOfTransaction;
-  created_at : string;
+  created_at : Date;
 }

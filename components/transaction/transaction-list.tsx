@@ -1,5 +1,6 @@
 import type { Transaction } from "@/types/transaction";
 import TransactionSubList from "@/components/transaction/transaction-sub-list";
+import { createClient } from "@/lib/supabase/server";
 
 interface Group {
   transactions : Transaction[];
@@ -13,7 +14,7 @@ interface Grouped {
 const groupAndSumTransactionsByDate = ( transactions : Transaction[] ) => {
   const grouped : Grouped = {};
   for ( const transaction of transactions ) {
-    const date = transaction.created_at.split ( "T" )[0];
+    const date : string = transaction.created_at.toString ().split ( "T" )[0];
     if ( !grouped[date] ) {
       grouped[date] = {
         transactions : [],
@@ -29,37 +30,25 @@ const groupAndSumTransactionsByDate = ( transactions : Transaction[] ) => {
   return grouped;
 };
 
-const getSortedGroupedEntries = (
-  grouped : Grouped,
-  sort : "newest" | "oldest" = "newest"
-) => {
-  return Object.entries ( grouped ).sort ( ( [ dateA ], [ dateB ] ) => {
-    if ( sort === "newest" ) {
-      return dateB.localeCompare ( dateA );
-    } else {
-      return dateA.localeCompare ( dateB );
-    }
-  } );
-};
 
 const TransactionList = async () => {
-  const response = await
-    fetch ( `${ process.env.NEXT_PUBLIC_API_URL }/transactions`, {
-      next : {
-        tags : [
-          "transaction-list"
-        ]
-      }
-    } );
+  const supabase = await createClient ()
   
-  const transactions : Transaction[] = await response.json ()
+  const {
+    data : transactions,
+    error
+  } = await supabase.from ( "transactions" )
+    .select ( "*" )
+    .order ( "created_at", { ascending : false } )
   
-  const grouped = groupAndSumTransactionsByDate ( transactions );
-  const sortedEntries = getSortedGroupedEntries ( grouped );
+  const grouped = groupAndSumTransactionsByDate ( transactions! );
   
   return (
     <section className="flex flex-col gap-8">
-      { sortedEntries.map ( ( [ date, { transactions, amount } ] ) => (
+      { Object.entries ( grouped ).map ( ( [ date, {
+        transactions,
+        amount
+      } ] ) => (
         <div key={ date }>
           <TransactionSubList
             date={ date }

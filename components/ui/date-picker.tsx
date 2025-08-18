@@ -15,8 +15,8 @@ import { cn } from "@/lib/utils";
 interface DatePickerProps {
   id : string;
   name? : string;
-  value? : string;
-  onChange? : ( value : string ) => void;
+  value? : Date | undefined;
+  onChange? : ( value : Date | undefined ) => void;
   onBlur? : () => void
   inputRef? : React.Ref<HTMLButtonElement>;
 }
@@ -30,12 +30,10 @@ const DatePicker = ( {
     inputRef
   } : DatePickerProps
 ) => {
-  const dateValue = value ? new Date ( value ) : undefined;
   
   const handleDateSelect = ( selectedDate : Date | undefined ) => {
-    if ( selectedDate && onChange ) {
-      const isoString = selectedDate.toISOString ();
-      onChange ( isoString );
+    if ( onChange ) {
+      onChange ( selectedDate );
     }
   };
   
@@ -48,20 +46,20 @@ const DatePicker = ( {
           name={ name ?? undefined }
           onBlur={ onBlur }
           ref={ inputRef ?? null }
-          data-empty={ !dateValue }
+          data-empty={ !value }
           className={ cn (
             "data-[empty=true]:text-muted-foreground ",
             "justify-between text-left ",
             "font-normal cursor-pointer" ) }
         >
-          { dateValue ? format ( dateValue, "PPP" ) : <span>Pick a date</span> }
+          { value ? format ( value, "PPP" ) : <span>Pick a date</span> }
           <CalendarIcon/>
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={ dateValue }
+          selected={ value }
           onSelect={ handleDateSelect }
         />
       </PopoverContent>

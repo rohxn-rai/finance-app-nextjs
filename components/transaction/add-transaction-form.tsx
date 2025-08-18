@@ -46,7 +46,7 @@ const FormSchema = z.object ( {
     CATEGORYOFTRANSACTION,
     "Choose a category from the given options."
   ),
-  created_at : z.iso.datetime ( "Enter a valid date." ),
+  created_at : z.date ( "Enter a valid date." ),
   amount : z.string ()
     .min ( 1, "Amount is required." )
     .refine ( (
@@ -61,7 +61,7 @@ const FormSchema = z.object ( {
 
 const AddTransactionForm = () => {
   const [ isSaving, setIsSaving ] = useState ( false );
-  const [ isResetting, setIsResetting ] = useState ( false );
+  // const [ isResetting, setIsResetting ] = useState ( false );
   
   const router = useRouter ()
   
@@ -71,7 +71,7 @@ const AddTransactionForm = () => {
     defaultValues : {
       type : "" as TypeOfTransaction,
       category : "" as CategoryOfTransaction,
-      created_at : "",
+      created_at : undefined,
       amount : "",
       description : ""
     },
@@ -110,28 +110,28 @@ const AddTransactionForm = () => {
     setIsSaving ( false )
   };
   
-  const handleReset = async () => {
-    setIsResetting ( true )
-    
-    const resetForm = async () => {
-      form.reset ( {
-        type : undefined,
-        category : undefined,
-        created_at : "",
-        amount : "",
-        description : ""
-      } )
-    }
-    
-    toast.promise ( resetForm (), {
-      loading : 'Adding transaction ...',
-      success : "Reset the form!",
-      error : 'Error'
-    } )
-    
-    setIsResetting ( false )
-  }
-  
+  // const handleReset = async () => {
+  //   setIsResetting ( true )
+  //
+  //   const resetForm = async () => {
+  //     form.reset ( {
+  //       type : undefined,
+  //       category : undefined,
+  //       created_at : "",
+  //       amount : "",
+  //       description : ""
+  //     } )
+  //   }
+  //
+  //   toast.promise ( resetForm (), {
+  //     loading : "Adding transaction ...",
+  //     success : "Reset the form!",
+  //     error : "Error"
+  //   } )
+  //
+  //   setIsResetting ( false )
+  // }
+  //
   return (
     <>
       <Form { ...form }>
@@ -261,14 +261,14 @@ const AddTransactionForm = () => {
               <Button className="cursor-pointer"
                       variant="destructive"
                       type="button"
-                      onClick={ handleReset }
-                      disabled={ isSaving || isResetting }
+                // disabled={ isSaving || isResetting }
               >
-                { isResetting ? "Resetting ..." : "Reset" }
+                {/*{ isResetting ? "Resetting ..." : "Reset" }*/ }
+                Reset
               </Button>
               <Button className="cursor-pointer"
                       type="submit"
-                      disabled={ isSaving || isResetting }
+                      disabled={ isSaving }
               >
                 { isSaving ? "Saving ..." : "Save" }
               </Button>
