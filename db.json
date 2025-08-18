@@ -63,6 +63,38 @@
       "created_at": "2025-08-15T04:00:00.000Z",
       "amount": 2.99,
       "description": "India"
+    },
+    {
+      "id": 0.6379809742949661,
+      "type": "Investment",
+      "category": "Education",
+      "created_at": "2025-08-05T04:00:00.000Z",
+      "amount": 1000,
+      "description": "For The Future"
+    },
+    {
+      "id": 0.5560853419271494,
+      "type": "Saving",
+      "category": "Other",
+      "created_at": "2025-08-15T04:00:00.000Z",
+      "amount": 1200,
+      "description": "For a House"
+    },
+    {
+      "id": 0.5800250669853605,
+      "type": "Expense",
+      "category": "Food",
+      "created_at": "2025-08-15T04:00:00.000Z",
+      "amount": 200,
+      "description": "Date"
+    },
+    {
+      "id": 0.9211843820851597,
+      "type": "Expense",
+      "category": "Education",
+      "created_at": "2025-08-15T04:00:00.000Z",
+      "amount": 250,
+      "description": "Testing"
     }
   ],
   "trends": [
