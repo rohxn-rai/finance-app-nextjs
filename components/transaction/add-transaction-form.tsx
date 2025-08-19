@@ -1,18 +1,18 @@
 "use client"
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import revalidateTransactionListAction
-  from "@/action/revalidate-transaction-list-action";
+import createTransactionAction from "@/actions/create-transaction-action";
 
 import {
   CATEGORYOFTRANSACTION,
   TYPEOFTRANSACTION
 } from "@/constants/all-consts";
 import {
+  AddTransaction,
   CategoryOfTransaction,
-  Transaction,
+  TransactionSchema,
   TypeOfTransaction
 } from "@/types/transaction";
 
@@ -38,100 +38,69 @@ import { toast } from "sonner"
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const FormSchema = z.object ( {
-  type : z.enum ( TYPEOFTRANSACTION, "Choose a type from the given options." ),
-  category : z.enum (
-    CATEGORYOFTRANSACTION,
-    "Choose a category from the given options."
-  ),
-  created_at : z.date ( "Enter a valid date." ),
-  amount : z.string ()
-    .min ( 1, "Amount is required." )
-    .refine ( (
-      val
-    ) => !isNaN ( Number ( val ) ) && Number ( val ) > 0, {
-      message : "Amount must be a valid number."
-    } ),
-  description : z.string ( "Enter proper description." )
-    .min ( 1, "Description is required." )
-    .max ( 64, "Description can not exceed 64 characters." )
-} );
 
 const AddTransactionForm = () => {
-  const [ isSaving, setIsSaving ] = useState ( false );
-  // const [ isResetting, setIsResetting ] = useState ( false );
-  
   const router = useRouter ()
   
-  const form = useForm<z.infer<typeof FormSchema>> ( {
-    resolver : zodResolver ( FormSchema ),
+  const [ isSaving, setIsSaving ] = useState ( false )
+  
+  const form = useForm<AddTransaction> ( {
+    resolver : zodResolver ( TransactionSchema ),
     mode : "all",
     defaultValues : {
       type : "" as TypeOfTransaction,
       category : "" as CategoryOfTransaction,
       created_at : undefined,
-      amount : "",
+      amount : undefined,
       description : ""
     },
     reValidateMode : "onBlur"
   } );
   
-  const onSubmit = async (
-    data : z.infer<typeof FormSchema>
-  ) => {
+  const onSubmit = async ( data : AddTransaction ) => {
     setIsSaving ( true )
     
-    const submitData : Transaction = {
-      ...data,
-      id : Math.random (),
-      amount : parseFloat ( data.amount )
-    };
+    toast.loading ( "Processing...", {
+      id : "Add-Transaction",
+    } )
     
-    const addingData = async ( data : Transaction ) => {
-      await
-        fetch ( `${ process.env.NEXT_PUBLIC_API_URL }/transactions`, {
-          method : "POST",
-          headers : {
-            "Content-Type" : "application/json"
-          },
-          body : JSON.stringify ( data )
-        }, )
-      await revalidateTransactionListAction ()
-      router.push ( "/dashboard" )
+    try {
+      const processedData = {
+        ...data,
+        amount : Number ( data.amount )
+      };
+      
+      const result = await createTransactionAction ( processedData )
+      
+      toast.dismiss ( "Add-Transaction" )
+      
+      if ( !result.success ) {
+        throw new Error ( result.error )
+      }
+      
+      toast.success ( "Transaction saved successfully." )
+      
+      router.push ( "/dashboard" );
+    } catch ( err ) {
+      toast.dismiss ( "Add-Transaction" )
+      toast.error ( err instanceof Error ? err.message : "An unexpected error occurred" )
+    } finally {
+      setIsSaving ( false );
     }
-    
-    toast.promise ( addingData ( submitData ), {
-      loading : "Adding transaction ...",
-      success : "Transaction has been added.",
-      error : "Error"
-    } );
-    setIsSaving ( false )
-  };
+  }
   
-  // const handleReset = async () => {
-  //   setIsResetting ( true )
-  //
-  //   const resetForm = async () => {
-  //     form.reset ( {
-  //       type : undefined,
-  //       category : undefined,
-  //       created_at : "",
-  //       amount : "",
-  //       description : ""
-  //     } )
-  //   }
-  //
-  //   toast.promise ( resetForm (), {
-  //     loading : "Adding transaction ...",
-  //     success : "Reset the form!",
-  //     error : "Error"
-  //   } )
-  //
-  //   setIsResetting ( false )
-  // }
-  //
+  const handleReset = () => {
+    form.reset ( {
+      type : undefined,
+      category : undefined,
+      created_at : undefined,
+      amount : undefined,
+      description : ""
+    } )
+    
+    toast.success ( "Reset the form!" )
+  }
+  
   return (
     <>
       <Form { ...form }>
@@ -225,10 +194,16 @@ const AddTransactionForm = () => {
                   <span
                     className="absolute top-1.5 left-3 flex h-4 w-4">$</span>
                     <Input id="amount"
-                           type="text"
+                           type="number"
                            placeholder="999.99"
                            className="pl-8"
-                           { ...field }
+                           value={ field.value ?? "" }
+                           onChange={ ( e ) => {
+                             const value = e.target.value;
+                             field.onChange ( value === "" ? undefined : Number ( value ) );
+                           } }
+                           onBlur={ field.onBlur }
+                           name={ field.name }
                     />
                   </div>
                   <FormMessage/>
@@ -261,9 +236,9 @@ const AddTransactionForm = () => {
               <Button className="cursor-pointer"
                       variant="destructive"
                       type="button"
-                // disabled={ isSaving || isResetting }
+                      onClick={ handleReset }
+                      disabled={ isSaving }
               >
-                {/*{ isResetting ? "Resetting ..." : "Reset" }*/ }
                 Reset
               </Button>
               <Button className="cursor-pointer"
@@ -279,6 +254,5 @@ const AddTransactionForm = () => {
     </>
   )
 }
-
 
 export default AddTransactionForm;
