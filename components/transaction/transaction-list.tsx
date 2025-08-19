@@ -1,6 +1,6 @@
 import type { Transaction } from "@/types/transaction";
 import TransactionSubList from "@/components/transaction/transaction-sub-list";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 interface Group {
   transactions : Transaction[];
@@ -36,7 +36,6 @@ const TransactionList = async () => {
   
   const {
     data : transactions,
-    error
   } = await supabase.from ( "transactions" )
     .select ( "*" )
     .order ( "created_at", { ascending : false } )
