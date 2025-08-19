@@ -53,7 +53,11 @@ const PlaygroundPage = () => {
         <h2 className="mb-4 text-lg font-mono">Transaction Item</h2>
         <Separator/>
         <div className="flex flex-col gap-4">
-          <TransactionItem type="Income" description="Salary" amount={ 2000 }/>
+          <TransactionItem
+            type="Income"
+            category=""
+            description="Salary"
+            amount={ 2000 }/>
           <TransactionItem
             type="Expense"
             category="Food"
@@ -62,11 +66,13 @@ const PlaygroundPage = () => {
           />
           <TransactionItem
             type="Saving"
+            category=""
             description="For children"
             amount={ 500 }
           />
           <TransactionItem
             type="Investment"
+            category=""
             description="In Microsoft"
             amount={ 9000 }
           />
@@ -81,7 +87,11 @@ const PlaygroundPage = () => {
         <div className="flex flex-col gap-4">
           <TransactionSummaryItem date="2025-08-11" amount={ 3500 }/>
           <Separator/>
-          <TransactionItem type="Income" description="Salary" amount={ 2000 }/>
+          <TransactionItem
+            type="Income"
+            category=""
+            description="Salary"
+            amount={ 2000 }/>
           <TransactionItem
             type="Expense"
             category="Food"
@@ -90,11 +100,13 @@ const PlaygroundPage = () => {
           />
           <TransactionItem
             type="Saving"
+            category=""
             description="For children"
             amount={ 500 }
           />
           <TransactionItem
             type="Investment"
+            category=""
             description="In Microsoft"
             amount={ 9000 }
           />
