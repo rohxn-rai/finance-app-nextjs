@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import createTransactionAction from "@/actions/create-transaction-action";
 
 import {
   CATEGORYOFTRANSACTION,
-  TYPEOFTRANSACTION
+  TYPEOFTRANSACTION,
 } from "@/constants/all-consts";
 import {
   AddTransaction,
   CategoryOfTransaction,
   TransactionSchema,
-  TypeOfTransaction
+  TypeOfTransaction,
 } from "@/types/transaction";
 
 import {
@@ -21,7 +21,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,227 +32,252 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import { useForm } from "react-hook-form"
+import { SubmitHandler, useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddTransactionForm = () => {
-  const router = useRouter ()
-  
-  const [ isSaving, setIsSaving ] = useState ( false )
-  
-  const form = useForm<AddTransaction> ( {
-    resolver : zodResolver ( TransactionSchema ),
-    mode : "all",
-    defaultValues : {
-      type : "" as TypeOfTransaction,
-      category : "" as CategoryOfTransaction,
-      created_at : undefined,
-      amount : undefined,
-      description : ""
+  const router = useRouter();
+
+  const [isSaving, setIsSaving] = useState(false);
+
+  const form = useForm<AddTransaction, any, AddTransaction>({
+    resolver: zodResolver(TransactionSchema) as Resolver<
+      AddTransaction,
+      any,
+      AddTransaction
+    >,
+    mode: "all",
+    defaultValues: {
+      type: "" as TypeOfTransaction,
+      category: "" as CategoryOfTransaction,
+      created_at: undefined,
+      amount: undefined,
+      description: "",
     },
-    reValidateMode : "onBlur"
-  } );
-  
-  const onSubmit = async ( data : AddTransaction ) => {
-    setIsSaving ( true )
-    
-    toast.loading ( "Processing...", {
-      id : "Add-Transaction",
-    } )
-    
+    reValidateMode: "onChange",
+  });
+
+  const type = form.watch("type");
+
+  const onSubmit: SubmitHandler<AddTransaction> = async (
+    data: AddTransaction
+  ) => {
+    setIsSaving(true);
+
+    toast.loading("Processing...", {
+      id: "Add-Transaction",
+    });
+
     try {
       const processedData = {
         ...data,
-        amount : Number ( data.amount )
+        amount: Number(data.amount),
       };
-      
-      const result = await createTransactionAction ( processedData )
-      
-      toast.dismiss ( "Add-Transaction" )
-      
-      if ( !result.success ) {
-        throw new Error ( result.error )
+
+      const result = await createTransactionAction(processedData);
+
+      toast.dismiss("Add-Transaction");
+
+      if (!result.success) {
+        throw new Error(result.error);
       }
-      
-      toast.success ( "Transaction saved successfully." )
-      
-      router.push ( "/dashboard" );
-    } catch ( err ) {
-      toast.dismiss ( "Add-Transaction" )
-      toast.error ( err instanceof Error ? err.message : "An unexpected error occurred" )
+
+      toast.success("Transaction saved successfully.");
+
+      router.push("/dashboard");
+    } catch (err) {
+      toast.dismiss("Add-Transaction");
+      toast.error(
+        err instanceof Error ? err.message : "An unexpected error occurred"
+      );
     } finally {
-      setIsSaving ( false );
+      setIsSaving(false);
     }
-  }
-  
+  };
+
   const handleReset = () => {
-    form.reset ( {
-      type : undefined,
-      category : undefined,
-      created_at : undefined,
-      amount : undefined,
-      description : ""
-    } )
-    
-    toast.success ( "Reset the form!" )
-  }
-  
+    form.reset({
+      type: "" as TypeOfTransaction,
+      category: "" as CategoryOfTransaction,
+      created_at: undefined,
+      amount: undefined,
+      description: "",
+    });
+
+    toast.success("Reset the form!");
+  };
+
   return (
     <>
-      <Form { ...form }>
-        <form className="flex flex-col gap-4"
-              onSubmit={ form.handleSubmit ( onSubmit ) }
+      <Form {...form}>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={form.handleSubmit(onSubmit)}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
             <FormField
-              control={ form.control }
+              control={form.control}
               name="type"
-              render={ ( { field } ) => (
+              render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel htmlFor="type">Type<span
-                    className="text-destructive">*</span></FormLabel>
+                  <FormLabel htmlFor="type">
+                    Type<span className="text-destructive">*</span>
+                  </FormLabel>
                   <Select
-                    value={ field.value }
-                    onValueChange={ field.onChange }
+                    value={field.value}
+                    onValueChange={(value: TypeOfTransaction) => {
+                      field.onChange(value);
+
+                      if (value !== "Expense") {
+                        form.setValue("category", "");
+                      }
+                    }}
                   >
                     <SelectTrigger id="type">
-                      <SelectValue
-                        placeholder="Select type of transaction ..."/>
+                      <SelectValue placeholder="Select type of transaction ..." />
                     </SelectTrigger>
                     <SelectContent>
-                      { TYPEOFTRANSACTION.map ( (type => (
-                        <SelectItem value={ type }
-                                    key={ type }>{ type }</SelectItem>
-                      )) ) }
+                      {TYPEOFTRANSACTION.map((type) => (
+                        <SelectItem value={type} key={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              ) }
+              )}
             />
-            
+
             <FormField
-              control={ form.control }
+              control={form.control}
               name="category"
-              render={ ( { field } ) => (
+              render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel htmlFor="category">Category<span
-                    className="text-destructive">*</span></FormLabel>
+                  <FormLabel htmlFor="category">
+                    Category
+                    {type === "Expense" && (
+                      <span className="text-destructive">*</span>
+                    )}
+                  </FormLabel>
                   <Select
-                    value={ field.value }
-                    onValueChange={ field.onChange }
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={type !== "Expense"}
                   >
                     <SelectTrigger id="category">
-                      <SelectValue
-                        placeholder="Select category of transactions ..."/>
+                      <SelectValue placeholder="Select category of transactions ..." />
                     </SelectTrigger>
                     <SelectContent>
-                      { CATEGORYOFTRANSACTION.map ( (type => (
-                        <SelectItem value={ type }
-                                    key={ type }
-                        >
-                          { type }
+                      {CATEGORYOFTRANSACTION.map((type) => (
+                        <SelectItem value={type} key={type}>
+                          {type}
                         </SelectItem>
-                      )) ) }
+                      ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              ) }
+              )}
             />
-            
+
             <FormField
-              control={ form.control }
+              control={form.control}
               name="created_at"
-              render={ ( { field } ) => (
+              render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel htmlFor="created_at">
                     Date<span className="text-destructive">*</span>
                   </FormLabel>
-                  <DatePicker
-                    id="created_at"
-                    { ...field }
-                  />
-                  <FormMessage/>
+                  <DatePicker id="created_at" {...field} />
+                  <FormMessage />
                 </FormItem>
-              ) }
+              )}
             />
-            
+
             <FormField
-              control={ form.control }
+              control={form.control}
               name="amount"
-              render={ ( { field } ) => (
+              render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel htmlFor="amount">Amount<span
-                    className="text-destructive">*</span></FormLabel>
+                  <FormLabel htmlFor="amount">
+                    Amount<span className="text-destructive">*</span>
+                  </FormLabel>
                   <div className="relative inline-flex gap-1">
-                  <span
-                    className="absolute top-1.5 left-3 flex h-4 w-4">$</span>
-                    <Input id="amount"
-                           type="number"
-                           placeholder="999.99"
-                           className="pl-8"
-                           value={ field.value ?? "" }
-                           onChange={ ( e ) => {
-                             const value = e.target.value;
-                             field.onChange ( value === "" ? undefined : Number ( value ) );
-                           } }
-                           onBlur={ field.onBlur }
-                           name={ field.name }
+                    <span className="absolute top-1.5 left-3 flex h-4 w-4">
+                      $
+                    </span>
+                    <Input
+                      id="amount"
+                      type="number"
+                      placeholder="999.99"
+                      className="pl-8"
+                      value={field.value ?? ""}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        const value = e.target.value;
+                        field.onChange(
+                          value === "" ? undefined : Number(value)
+                        );
+                      }}
+                      onBlur={field.onBlur}
+                      name={field.name}
                     />
                   </div>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              ) }
+              )}
             />
-            
+
             <FormField
-              control={ form.control }
+              control={form.control}
               name="description"
-              render={ ( { field } ) => (
+              render={({ field }) => (
                 <FormItem className="md:col-span-2 flex flex-col gap-2">
-                  <FormLabel htmlFor="description">Description<span
-                    className="text-destructive">*</span></FormLabel>
-                  <Textarea id="description"
-                            rows={ 2 }
-                            placeholder="Enter Description ..."
-                            { ...field }
+                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <Textarea
+                    id="description"
+                    rows={2}
+                    placeholder="Enter Description ..."
+                    {...field}
                   />
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
-              ) }
+              )}
             />
-          
           </div>
-          
-          <div className="flex flex-row justify-between">
-            <div></div>
+
+          <div className="flex flex-col md:flex-row gap-2 justify-between">
+            <div className="flex flex-row items-center text-xs">
+              <span className="text-destructive">*</span>
+              These fields are mandatory.
+            </div>
             <div className="flex flex-row gap-4 justify-end">
-              <Button className="cursor-pointer"
-                      variant="destructive"
-                      type="button"
-                      onClick={ handleReset }
-                      disabled={ isSaving }
+              <Button
+                className="cursor-pointer"
+                variant="destructive"
+                type="button"
+                onClick={handleReset}
+                disabled={isSaving}
               >
                 Reset
               </Button>
-              <Button className="cursor-pointer"
-                      type="submit"
-                      disabled={ isSaving }
+              <Button
+                className="cursor-pointer"
+                type="submit"
+                disabled={isSaving}
               >
-                { isSaving ? "Saving ..." : "Save" }
+                {isSaving ? "Saving ..." : "Save"}
               </Button>
             </div>
           </div>
         </form>
       </Form>
     </>
-  )
-}
+  );
+};
 
 export default AddTransactionForm;
