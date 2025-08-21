@@ -35,7 +35,7 @@ const FilterByTimeRecent = () => {
           <SelectValue placeholder="Select Filter by time ..." />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="today">Today</SelectItem>
+          <SelectItem value="last24hours">Last 24 hours</SelectItem>
           <SelectItem value="last7days">Last 7 days</SelectItem>
           <SelectItem value="last30days">Last 30 days</SelectItem>
           <SelectItem value="last12months">Last 12 months </SelectItem>
