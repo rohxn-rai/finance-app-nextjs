@@ -8,8 +8,15 @@ import { Button } from "@/components/ui/button";
 
 import { PlusCircle } from "lucide-react";
 import FilterByTimeRecent from "@/components/filters/filter-by-time-dashboard";
+import type { FilterByTime } from "@/types/transaction";
 
-const DashboardPage = () => {
+const DashboardPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: FilterByTime | undefined }>;
+}) => {
+  const { filter = "last30days" } = await searchParams;
+
   return (
     <>
       <div className="flex flex-col gap-8">
@@ -17,7 +24,7 @@ const DashboardPage = () => {
           <h1 className="text-4xl font-semibold mt-2.5">Summary</h1>
           <FilterByTimeRecent />
         </section>
-        <TrendSetLoadingSkeleton />
+        <TrendSetLoadingSkeleton filter={filter} />
         <section className="flex flex-row justify-between items-center">
           <h2 className="text-2xl">Transactions</h2>
           <Link href="/dashboard/transaction/add">
