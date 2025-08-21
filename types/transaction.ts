@@ -10,6 +10,11 @@ export type FilterByTime =
   | "last30days"
   | "last12months";
 
+export interface SupabaseTrendData {
+  current_amount: number;
+  previous_amount: number;
+}
+
 export type TypeOfTransaction = "Income" | "Expense" | "Investment" | "Saving";
 
 export type CategoryOfTransaction =
