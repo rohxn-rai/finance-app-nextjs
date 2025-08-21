@@ -4,6 +4,12 @@ import {
   TYPEOFTRANSACTION,
 } from "@/constants/all-consts";
 
+export type FilterByTime =
+  | "today"
+  | "last7days"
+  | "last30days"
+  | "last12months";
+
 export type TypeOfTransaction = "Income" | "Expense" | "Investment" | "Saving";
 
 export type CategoryOfTransaction =
