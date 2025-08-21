@@ -2,8 +2,8 @@
 -- Note: if your function has a different argument set, it won't replace the original function
 create or replace function calculate_total (
   -- The arguments (this one is optional, but arguments can be mandatory, just skip `default null`)
-	range_ang varchar default 'last30days',
-	type_arg varchar default null
+	range_arg text default 'last30days',
+	type_arg text default null
 ) returns table(current_amount numeric, previous_amount numeric) as $$ -- Returns number
 declare
 	currentStart timestamp;
@@ -13,10 +13,10 @@ declare
 begin
 	currentEnd := now();
 	currentStart := case
-		when range_ang = 'last24hours' then currentEnd - interval '24 hours'
-		when range_ang = 'last7days' then currentEnd - interval '7 days'
-		when range_ang = 'last30days' then currentEnd - interval '30 days'
-		when range_ang = 'last12months' then currentEnd - interval '12 months'
+		when range_arg = 'last24hours' then currentEnd - interval '24 hours'
+		when range_arg = 'last7days' then currentEnd - interval '7 days'
+		when range_arg = 'last30days' then currentEnd - interval '30 days'
+		when range_arg = 'last12months' then currentEnd - interval '12 months'
 		else currentEnd - interval '30 days'
 	end;
 
