@@ -30,7 +30,7 @@ const FilterByTimeRecent = () => {
   return (
     <aside className="flex flex-col gap-2">
       <Label htmlFor="filter">Filter</Label>
-      <Select defaultValue={filter} onValueChange={handleChange}>
+      <Select value={filter} onValueChange={handleChange}>
         <SelectTrigger id="filter" className="w-[200px]">
           <SelectValue placeholder="Select Filter by time ..." />
         </SelectTrigger>
