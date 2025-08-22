@@ -1,8 +1,17 @@
-import { CategoryOfTransaction, TypeOfTransaction } from "@/types/transaction";
-import useFormatCurrency from "@/hooks/use-format-currency";
-import { HandCoins, Landmark, PiggyBank, Wallet } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import TransactionItemActionButton from "@/components/transaction/transaction-item-action-button";
+
+import { CategoryOfTransaction, TypeOfTransaction } from "@/types/transaction";
+import useFormatCurrency from "@/hooks/use-format-currency";
+import {
+  HandCoins,
+  Landmark,
+  PencilLine,
+  PiggyBank,
+  Wallet,
+} from "lucide-react";
 
 const TransactionItem = ({
   id,
@@ -45,7 +54,7 @@ const TransactionItem = ({
 
   return (
     <li className="w-full flex flex-row gap-4 items-center">
-      <div className="flex items-center grow">
+      <div className="flex flex-row gap-2 items-center grow">
         <IconComponent
           size={20}
           className={`${colors} mr-2 min-h-5 min-w-5 hidden md:flex`}
@@ -60,7 +69,14 @@ const TransactionItem = ({
       <div className="min-w-[70px] text-right">{formattedAmount}</div>
 
       <div className="min-w-[100px] flex justify-end">
-        <TransactionItemActionButton id={id} onRemove={onRemove(id)} />
+        <div className="flex flex-row gap-2 items-center">
+          <Link href={`/dashboard/transaction/${id}/edit`}>
+            <Button variant="outline" size="sm">
+              <PencilLine />
+            </Button>
+          </Link>
+          <TransactionItemActionButton id={id} onRemove={onRemove(id)} />
+        </div>
       </div>
     </li>
   );
