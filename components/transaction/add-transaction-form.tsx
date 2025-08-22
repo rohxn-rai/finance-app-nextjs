@@ -54,7 +54,9 @@ const AddTransactionForm = () => {
     defaultValues: {
       type: "" as TypeOfTransaction,
       category: "" as CategoryOfTransaction,
-      created_at: undefined,
+      created_at: new Date(
+        new Date().toISOString().split("T")[0] + "T00:00:00.000Z"
+      ),
       amount: undefined,
       description: "",
     },
@@ -62,6 +64,8 @@ const AddTransactionForm = () => {
   });
 
   const type = form.watch("type");
+
+  console.log(form.getValues("created_at"));
 
   const onSubmit: SubmitHandler<AddTransaction> = async (
     data: AddTransaction
@@ -103,7 +107,9 @@ const AddTransactionForm = () => {
     form.reset({
       type: "" as TypeOfTransaction,
       category: "" as CategoryOfTransaction,
-      created_at: undefined,
+      created_at: new Date(
+        new Date().toISOString().split("T")[0] + "T00:00:00.000Z"
+      ),
       amount: undefined,
       description: "",
     });
