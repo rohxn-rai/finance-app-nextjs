@@ -26,25 +26,29 @@ const TransactionList = ({
   );
   const grouped = groupAndSumTransactionsByDate(transactions);
 
-  const handleLoadMore = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLoadMore = async () => {
     setIsLoading(true);
     try {
       const nextSetOfTransactions = await fetchTransactionsAction(
         filter,
-        offset,
+        transactions.length,
         10
       );
-      setOffset((prevValue) => prevValue + nextSetOfTransactions.length);
-      setRemoveButton(offset % 10 !== 0);
+      setRemoveButton(nextSetOfTransactions.length === 0);
       setTransactions((prevTransactions) => [
         ...prevTransactions,
         ...nextSetOfTransactions,
       ]);
-    } catch (err) {
+    } catch {
       throw new Error("Cannot fetch data at the moment!");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRemove = (id: string | number) => () => {
+    setTransactions((prev) => prev.filter((t) => t.id !== id));
+    setOffset((prev) => prev - 1);
   };
 
   return (
@@ -55,6 +59,7 @@ const TransactionList = ({
             date={date}
             transactions={transactions}
             amount={amount}
+            onRemove={handleRemove}
           />
         </div>
       ))}
@@ -67,9 +72,7 @@ const TransactionList = ({
         <div className="flex justify-center">
           <Button
             variant="ghost"
-            className={`flex flex-row gap-2 ${
-              isLoading ? "" : "cursor-pointer"
-            }`}
+            className="flex flex-row gap-2"
             onClick={handleLoadMore}
             disabled={isLoading}
           >
