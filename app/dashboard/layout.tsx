@@ -1,11 +1,7 @@
-import Header from "@/components/header";
-import React from "react";
-
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Header className="my-8" />
-      <>{children}</>
+      {children}
       <footer className="mt-auto text-center py-8">Footer</footer>
     </>
   );
