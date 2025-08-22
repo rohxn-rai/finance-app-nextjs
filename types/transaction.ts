@@ -27,7 +27,7 @@ export type CategoryOfTransaction =
   | "";
 
 export interface Transaction {
-  id: number;
+  id: string;
   amount: number;
   type: TypeOfTransaction;
   description: string;
