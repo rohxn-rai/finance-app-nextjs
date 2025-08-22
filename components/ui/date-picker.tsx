@@ -1,70 +1,65 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import * as React from "react";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
 interface DatePickerProps {
-  id : string;
-  name? : string;
-  value? : Date | undefined;
-  onChange? : ( value : Date | undefined ) => void;
-  onBlur? : () => void
-  inputRef? : React.Ref<HTMLButtonElement>;
+  id: string;
+  name?: string;
+  value?: Date | undefined;
+  onChange?: (value: Date | undefined) => void;
+  onBlur?: () => void;
+  inputRef?: React.Ref<HTMLButtonElement>;
 }
 
-const DatePicker = ( {
-    id,
-    name,
-    value,
-    onChange,
-    onBlur,
-    inputRef
-  } : DatePickerProps
-) => {
-  
-  const handleDateSelect = ( selectedDate : Date | undefined ) => {
-    if ( onChange ) {
-      onChange ( selectedDate );
+const DatePicker = ({
+  id,
+  name,
+  value,
+  onChange,
+  onBlur,
+  inputRef,
+}: DatePickerProps) => {
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    if (onChange) {
+      onChange(selectedDate);
     }
   };
-  
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          id={ id }
-          name={ name ?? undefined }
-          onBlur={ onBlur }
-          ref={ inputRef ?? null }
-          data-empty={ !value }
-          className={ cn (
+          id={id}
+          name={name ?? undefined}
+          onBlur={onBlur}
+          ref={inputRef ?? null}
+          data-empty={!value}
+          className={cn(
             "data-[empty=true]:text-muted-foreground ",
             "justify-between text-left ",
-            "font-normal cursor-pointer" ) }
+            "font-normal "
+          )}
         >
-          { value ? format ( value, "PPP" ) : <span>Pick a date</span> }
-          <CalendarIcon/>
+          {value ? format(value, "PPP") : <span>Pick a date</span>}
+          <CalendarIcon />
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-auto p-0">
-        <Calendar
-          mode="single"
-          selected={ value }
-          onSelect={ handleDateSelect }
-        />
+        <Calendar mode="single" selected={value} onSelect={handleDateSelect} />
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
 export default DatePicker;

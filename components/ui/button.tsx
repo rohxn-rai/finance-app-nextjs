@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva (
-  cn (
+const buttonVariants = cva(
+  cn(
     "inline-flex items-center justify-center ",
     "gap-2 whitespace-nowrap rounded-md text-sm ",
     "font-medium transition-all ",
-    "disabled:pointer-events-none ",
+    "cursor-pointer disabled:cursor-not-allowed ",
     "disabled:opacity-50 [&_svg]:pointer-events-none ",
     "[&_svg:not([class*='size-'])]:size-4 shrink-0 ",
     "[&_svg]:shrink-0 ",
@@ -19,70 +19,70 @@ const buttonVariants = cva (
     "focus-visible:ring-[3px] ",
     "aria-invalid:ring-destructive/20 ",
     "dark:aria-invalid:ring-destructive/40 ",
-    "aria-invalid:border-destructive"
+    "aria-invalid:border-destructive "
   ),
   {
-    variants : {
-      variant : {
-        default : cn (
+    variants: {
+      variant: {
+        default: cn(
           "bg-primary/70 text-primary-foreground ",
           "shadow-xs hover:bg-primary "
         ),
-        destructive : cn (
-          "bg-destructive/70 text-white shadow-xs ",
-          "hover:bg-destructive ",
+        destructive: cn(
+          "bg-destructive/70 text-foreground shadow-xs ",
+          "hover:bg-destructive dark:text-foreground",
           "focus-visible:ring-destructive/20 ",
           "dark:focus-visible:ring-destructive/40 ",
           "dark:bg-destructive/60 ",
           "dark:hover:bg-destructive/90"
         ),
-        outline : cn (
+        outline: cn(
           "border border-input bg-background shadow-xs ",
           "hover:bg-accent hover:text-accent-foreground ",
           "dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
         ),
-        secondary : cn (
+        secondary: cn(
           "bg-secondary text-secondary-foreground ",
           "shadow-xs hover:bg-secondary/80"
         ),
-        ghost : cn (
+        ghost: cn(
           "hover:bg-accent hover:text-accent-foreground ",
           "dark:hover:bg-accent/50"
         ),
-        link : "text-primary underline-offset-4 hover:underline",
+        link: "text-primary underline-offset-4 hover:underline",
       },
-      size : {
-        default : "h-9 px-4 py-2 has-[>svg]:px-3",
-        xs : "h-6 rounded-md gap-1 px-2 has-[>svg]:px-2 text-xs",
-        sm : "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 text-sm",
-        lg : "h-10 rounded-md px-6 has-[>svg]:px-4 text-lg",
-        icon : "size-9",
+      size: {
+        default: "h-9 px-4 py-2 has-[>svg]:px-3",
+        xs: "h-6 rounded-md gap-1 px-2 has-[>svg]:px-2 text-xs",
+        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 text-sm",
+        lg: "h-10 rounded-md px-6 has-[>svg]:px-4 text-lg",
+        icon: "size-9",
       },
     },
-    defaultVariants : {
-      variant : "default",
-      size : "default",
+    defaultVariants: {
+      variant: "default",
+      size: "default",
     },
   }
 );
 
-const Button = ( {
+const Button = ({
   className,
   variant,
   size,
   asChild = false,
   ...props
-} : React.ComponentProps<"button"> &
+}: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-  asChild? : boolean;
-} ) => {
+    asChild?: boolean;
+  }) => {
   const Comp = asChild ? Slot : "button";
-  
+
   return (
     <Comp
       data-slot="button"
-      className={ cn ( buttonVariants ( { variant, size, className } ) ) }
-      { ...props }
+      className={cn(buttonVariants({ variant, size, className }))}
+      {...props}
     />
   );
 };
