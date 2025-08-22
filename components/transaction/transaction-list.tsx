@@ -10,6 +10,7 @@ import type { FilterByTime, Transaction } from "@/types/transaction";
 import { groupAndSumTransactionsByDate } from "@/utils/transactions/untils";
 
 import { LoaderCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const TransactionList = ({
   initialTransactions,
@@ -64,7 +65,12 @@ const TransactionList = ({
         </div>
       ))}
       {transactions.length === 0 && (
-        <span className="flex justify-center text-muted-foreground dark:text-muted-foreground">
+        <span
+          className={cn(
+            "flex justify-center mt-24 ",
+            "text-muted-foreground dark:text-muted-foreground "
+          )}
+        >
           No transactions found
         </span>
       )}
