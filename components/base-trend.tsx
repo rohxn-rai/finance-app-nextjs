@@ -32,7 +32,7 @@ const BaseTrend = ({
   const formattedAmount = useFormatCurrency(amount);
 
   return (
-    <div>
+    <section>
       <div className={`font-semibold ${colorClasses[type]}`}>{type}</div>
       <div className="text-2xl font-semibold text-black dark:text-white mb-2">
         {formattedAmount}
@@ -46,7 +46,7 @@ const BaseTrend = ({
         )}
         {Math.abs(percentageChange).toFixed(0)}% vs last period
       </div>
-    </div>
+    </section>
   );
 };
 
