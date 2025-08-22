@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
-import TransactionItemLoadingSkeleton from "@/components/skeletons/transactions/transaction-list-loading-skeleton";
-import TransactionList from "@/components/transaction/transaction-list";
 import TrendSetLoadingSkeleton from "@/components/skeletons/trend/trend-set-loading-skeleton";
+import FilterByTimeRecent from "@/components/filters/filter-by-time-dashboard";
 import { Button } from "@/components/ui/button";
+import TransactionListWrapper from "@/components/transaction/transaction-list-wrapper";
+import TransactionItemLoadingSkeleton from "@/components/skeletons/transactions/transaction-list-loading-skeleton";
 
 import { PlusCircle } from "lucide-react";
-import FilterByTimeRecent from "@/components/filters/filter-by-time-dashboard";
 import type { FilterByTime } from "@/types/transaction";
 
 const DashboardPage = async ({
@@ -35,7 +35,7 @@ const DashboardPage = async ({
           </Link>
         </section>
         <Suspense fallback={<TransactionItemLoadingSkeleton />}>
-          <TransactionList />
+          <TransactionListWrapper filter={filter} />
         </Suspense>
       </div>
     </>
