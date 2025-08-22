@@ -13,7 +13,7 @@ import type { FilterByTime } from "@/types/transaction";
 const DashboardPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: FilterByTime | undefined }>;
+  searchParams: Promise<{ [filter: string]: FilterByTime | undefined }>;
 }) => {
   const { filter = "last30days" } = await searchParams;
 
@@ -21,14 +21,14 @@ const DashboardPage = async ({
     <>
       <div className="flex flex-col gap-8">
         <section className="flex flex-row justify-between items-center">
-          <h1 className="text-4xl font-semibold mt-2.5">Summary</h1>
+          <h1 className="text-4xl font-semibold mt-3">Summary</h1>
           <FilterByTimeRecent />
         </section>
         <TrendSetLoadingSkeleton filter={filter} />
         <section className="flex flex-row justify-between items-center">
           <h2 className="text-2xl">Transactions</h2>
           <Link href="/dashboard/transaction/add">
-            <Button variant="outline" size="sm" className="cursor-pointer">
+            <Button variant="outline" size="sm">
               <PlusCircle className="w-4 h-4" />
               <span>Add</span>
             </Button>
