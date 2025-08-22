@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-import { SubmitHandler, useForm, type Resolver } from "react-hook-form";
+import { type Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddTransactionForm = () => {
@@ -44,10 +44,10 @@ const AddTransactionForm = () => {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const form = useForm<AddTransaction, any, AddTransaction>({
+  const form = useForm<AddTransaction, object, AddTransaction>({
     resolver: zodResolver(TransactionSchema) as Resolver<
       AddTransaction,
-      any,
+      object,
       AddTransaction
     >,
     mode: "all",
@@ -68,8 +68,9 @@ const AddTransactionForm = () => {
   ) => {
     setIsSaving(true);
 
+    const randId = Math.random();
     toast.loading("Processing...", {
-      id: "Add-Transaction",
+      id: `create:transaction-${randId}`,
     });
 
     try {
@@ -80,17 +81,16 @@ const AddTransactionForm = () => {
 
       const result = await createTransactionAction(processedData);
 
-      toast.dismiss("Add-Transaction");
-
       if (!result.success) {
         throw new Error(result.error);
       }
+      toast.dismiss(`create:transaction-${randId}`);
 
       toast.success("Transaction saved successfully.");
 
       router.push("/dashboard");
     } catch (err) {
-      toast.dismiss("Add-Transaction");
+      toast.dismiss(`create:transaction-${randId}`);
       toast.error(
         err instanceof Error ? err.message : "An unexpected error occurred"
       );
@@ -257,7 +257,6 @@ const AddTransactionForm = () => {
             </div>
             <div className="flex flex-row gap-4 justify-end">
               <Button
-                className="cursor-pointer"
                 variant="destructive"
                 type="button"
                 onClick={handleReset}
@@ -265,11 +264,7 @@ const AddTransactionForm = () => {
               >
                 Reset
               </Button>
-              <Button
-                className="cursor-pointer"
-                type="submit"
-                disabled={isSaving}
-              >
+              <Button type="submit" disabled={isSaving}>
                 {isSaving ? "Saving ..." : "Save"}
               </Button>
             </div>
