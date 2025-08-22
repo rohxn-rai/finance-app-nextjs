@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 interface DatePickerProps {
   id: string;
   name?: string;
+  defaultValue?: Date;
   value?: Date | undefined;
   onChange?: (value: Date | undefined) => void;
   onBlur?: () => void;
@@ -24,6 +25,7 @@ interface DatePickerProps {
 const DatePicker = ({
   id,
   name,
+  defaultValue,
   value,
   onChange,
   onBlur,
@@ -32,6 +34,7 @@ const DatePicker = ({
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (onChange) {
       onChange(selectedDate);
+      console.log(selectedDate);
     }
   };
 
@@ -56,7 +59,12 @@ const DatePicker = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-auto p-0">
-        <Calendar mode="single" selected={value} onSelect={handleDateSelect} />
+        <Calendar
+          mode="single"
+          selected={value}
+          defaultMonth={defaultValue}
+          onSelect={handleDateSelect}
+        />
       </PopoverContent>
     </Popover>
   );
