@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-import { Loader2, PencilLine, Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import deleteTransaction from "@/actions/delete-transaction-action";
 import { toast } from "sonner";
 
@@ -27,11 +27,6 @@ const TransactionItemActionButton = ({
   onRemove: Function;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleEditButton = async () => {
-    setIsLoading(true);
-    setIsLoading(false);
-  };
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -57,14 +52,10 @@ const TransactionItemActionButton = ({
   };
 
   return (
-    <div className="flex flex-row gap-2 items-center">
-      <Button variant="outline" disabled={isLoading}>
-        <PencilLine />
-      </Button>
-
+    <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" disabled={isLoading}>
+          <Button variant="destructive" size="sm" disabled={isLoading}>
             <Trash2 />
           </Button>
         </AlertDialogTrigger>
@@ -94,7 +85,7 @@ const TransactionItemActionButton = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </>
   );
 };
 
