@@ -9,7 +9,7 @@ import type { FilterByTime } from "@/types/transaction";
 
 const TrendSetLoadingSkeleton = ({ filter }: { filter: FilterByTime }) => {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+    <section className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-8">
       {TYPEOFTRANSACTION.map((type) => (
         <ErrorBoundary key={type} fallback={<BaseTrendError type={type} />}>
           <Suspense fallback={<BaseTrendLoadingSkeleton type={type} />}>

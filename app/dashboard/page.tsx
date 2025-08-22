@@ -20,7 +20,7 @@ const DashboardPage = async ({
   return (
     <>
       <div className="flex flex-col gap-8">
-        <section className="flex sm:flex-row flex-col sm:justify-between gap-8 md:items-center">
+        <section className="flex xs:flex-row flex-col xs:justify-between gap-8 md:items-center">
           <h1 className="text-4xl font-semibold mt-3">Summary</h1>
           <FilterByTimeRecent />
         </section>
