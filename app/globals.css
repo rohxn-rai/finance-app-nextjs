@@ -32,7 +32,7 @@ footer {
 }
 
 @theme {
-  --breakpoint-xs: 30rem; /* 4000px */
+  --breakpoint-xs: 30rem; /* 480px */
 }
 
 @theme inline {
