@@ -65,8 +65,6 @@ const AddTransactionForm = () => {
 
   const type = form.watch("type");
 
-  console.log(form.getValues("created_at"));
-
   const onSubmit: SubmitHandler<AddTransaction> = async (
     data: AddTransaction
   ) => {
