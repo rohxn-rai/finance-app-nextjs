@@ -1,61 +1,83 @@
-import type { Transaction } from "@/types/transaction";
+"use client";
+
+import { useState } from "react";
+
+import fetchTransactionsAction from "@/actions/fetch-transactions-action";
+
 import TransactionSubList from "@/components/transaction/transaction-sub-list";
-import { createClient } from "@/utils/supabase/server";
+import { Button } from "@/components/ui/button";
+import type { FilterByTime, Transaction } from "@/types/transaction";
+import { groupAndSumTransactionsByDate } from "@/utils/transactions/untils";
 
-interface Group {
-  transactions : Transaction[];
-  amount : number;
-}
+import { LoaderCircle } from "lucide-react";
 
-interface Grouped {
-  [date : string] : Group;
-}
+const TransactionList = ({
+  initialTransactions,
+  filter,
+}: {
+  initialTransactions: Transaction[];
+  filter: FilterByTime;
+}) => {
+  const [transactions, setTransactions] = useState(initialTransactions);
+  const [offset, setOffset] = useState(initialTransactions.length);
+  const [isLoading, setIsLoading] = useState(false);
+  const [removeButton, setRemoveButton] = useState(
+    initialTransactions.length === 0
+  );
+  const grouped = groupAndSumTransactionsByDate(transactions);
 
-const groupAndSumTransactionsByDate = ( transactions : Transaction[] ) => {
-  const grouped : Grouped = {};
-  for ( const transaction of transactions ) {
-    const date : string = transaction.created_at.toString ().split ( "T" )[0];
-    if ( !grouped[date] ) {
-      grouped[date] = {
-        transactions : [],
-        amount : 0,
-      };
+  const handleLoadMore = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsLoading(true);
+    try {
+      const nextSetOfTransactions = await fetchTransactionsAction(
+        filter,
+        offset,
+        10
+      );
+      setOffset((prevValue) => prevValue + nextSetOfTransactions.length);
+      setRemoveButton(offset % 10 !== 0);
+      setTransactions((prevTransactions) => [
+        ...prevTransactions,
+        ...nextSetOfTransactions,
+      ]);
+    } catch (err) {
+      throw new Error("Cannot fetch data at the moment!");
+    } finally {
+      setIsLoading(false);
     }
-    grouped[date].transactions.push ( transaction );
-    const amount =
-      transaction.type === "Expense" ? -transaction.amount : transaction.amount;
-    grouped[date].amount += amount;
-  }
-  
-  return grouped;
-};
+  };
 
-
-const TransactionList = async () => {
-  const supabase = await createClient ()
-  
-  const {
-    data : transactions,
-  } = await supabase.from ( "transactions" )
-    .select ( "*" )
-    .order ( "created_at", { ascending : false } )
-  
-  const grouped = groupAndSumTransactionsByDate ( transactions! );
-  
   return (
     <section className="flex flex-col gap-8">
-      { Object.entries ( grouped ).map ( ( [ date, {
-        transactions,
-        amount
-      } ] ) => (
-        <div key={ date }>
+      {Object.entries(grouped).map(([date, { transactions, amount }]) => (
+        <div key={date}>
           <TransactionSubList
-            date={ date }
-            transactions={ transactions }
-            amount={ amount }
+            date={date}
+            transactions={transactions}
+            amount={amount}
           />
         </div>
-      ) ) }
+      ))}
+      {transactions.length === 0 && (
+        <span className="flex justify-center text-muted-foreground dark:text-muted-foreground">
+          No transactions found
+        </span>
+      )}
+      {!removeButton && (
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            className={`flex flex-row gap-2 ${
+              isLoading ? "" : "cursor-pointer"
+            }`}
+            onClick={handleLoadMore}
+            disabled={isLoading}
+          >
+            {isLoading && <LoaderCircle className="animate-spin" />}
+            Load more ...
+          </Button>
+        </div>
+      )}
     </section>
   );
 };
