@@ -28,6 +28,15 @@ const buttonVariants = cva(
           "bg-primary/70 text-primary-foreground ",
           "shadow-xs hover:bg-primary "
         ),
+        success: cn(
+          "bg-chart-2/70 text-background ",
+          "dark:text-foreground shadow-xs ",
+          "dark:bg-chart-2/60 ",
+          "hover:bg-chart-2 dark:text-foreground",
+          "focus-visible:ring-chart-2/20 ",
+          "dark:focus-visible:ring-chart-2/40 ",
+          "dark:hover:bg-chart-2/90 "
+        ),
         destructive: cn(
           "bg-destructive/70 text-background ",
           "dark:text-foreground shadow-xs ",
