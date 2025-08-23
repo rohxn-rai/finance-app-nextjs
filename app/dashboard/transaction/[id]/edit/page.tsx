@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/server";
 
 import { MoveLeft } from "lucide-react";
 import EditTransactionForm from "@/components/transaction/edit-transaction-form";
+import type { UUID } from "crypto";
 
 export const metadata: Metadata = {
   title: "Edit Transaction",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 const EditTransactionPageComponent = async ({
   params,
 }: {
-  params: { id: string };
+  params: { id: UUID };
 }) => {
   const { id } = await params;
   const supabase = await createClient();

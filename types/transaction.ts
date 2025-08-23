@@ -3,6 +3,7 @@ import {
   CATEGORYOFTRANSACTION,
   TYPEOFTRANSACTION,
 } from "@/constants/all-consts";
+import type { UUID } from "crypto";
 
 export type FilterByTime =
   | "today"
@@ -27,7 +28,7 @@ export type CategoryOfTransaction =
   | "";
 
 export interface Transaction {
-  id: string;
+  id: UUID;
   amount: number;
   type: TypeOfTransaction;
   description: string;

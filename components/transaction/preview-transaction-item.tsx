@@ -1,9 +1,4 @@
-import type {
-  CategoryOfTransaction,
-  TypeOfTransaction,
-} from "@/types/transaction";
-
-import { Badge } from "@/components/ui/badge";
+import type { TypeOfTransaction } from "@/types/transaction";
 
 import useFormatCurrency from "@/hooks/use-format-currency";
 
@@ -14,7 +9,6 @@ const PreviewTransactionItem = ({
   description,
   amount,
 }: {
-  id: string | number;
   type: TypeOfTransaction;
   description: string;
   amount: number;

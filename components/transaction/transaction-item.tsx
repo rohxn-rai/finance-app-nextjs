@@ -12,6 +12,7 @@ import {
   PiggyBank,
   Wallet,
 } from "lucide-react";
+import type { UUID } from "crypto";
 
 const TransactionItem = ({
   id,
@@ -21,7 +22,7 @@ const TransactionItem = ({
   amount,
   onRemove,
 }: {
-  id: string | number;
+  id: UUID | number;
   type: TypeOfTransaction;
   category: CategoryOfTransaction;
   description: string;

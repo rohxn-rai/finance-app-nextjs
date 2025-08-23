@@ -2,8 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
+import type { UUID } from "crypto";
 
-const deleteTransaction = async (id: string) => {
+const deleteTransaction = async (id: UUID) => {
   const supabase = await createClient();
   const { error } = await supabase.from("transactions").delete().eq("id", id);
   if (error) {

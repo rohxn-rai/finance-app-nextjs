@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 
 import { Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import type { UUID } from "crypto";
 
 const TransactionItemActionButton = ({
   id,
@@ -29,7 +30,7 @@ const TransactionItemActionButton = ({
   amount,
   onRemove,
 }: {
-  id: string | number;
+  id: UUID | number;
   type: TypeOfTransaction;
   description: string;
   amount: number;
@@ -75,7 +76,6 @@ const TransactionItemActionButton = ({
             </AlertDialogTitle>
             <ul className="p-4 ">
               <PreviewTransactionItem
-                id={id}
                 type={type}
                 description={description}
                 amount={amount}

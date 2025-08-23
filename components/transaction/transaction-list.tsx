@@ -11,6 +11,7 @@ import { groupAndSumTransactionsByDate } from "@/utils/transactions/untils";
 
 import { LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { UUID } from "crypto";
 
 const TransactionList = ({
   initialTransactions,
@@ -46,7 +47,7 @@ const TransactionList = ({
     }
   };
 
-  const handleRemove = (id: string | number) => () => {
+  const handleRemove = (id: UUID | number) => () => {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
   };
 
