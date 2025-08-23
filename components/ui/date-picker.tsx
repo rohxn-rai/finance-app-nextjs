@@ -20,6 +20,7 @@ interface DatePickerProps {
   onChange?: (value: Date | undefined) => void;
   onBlur?: () => void;
   inputRef?: React.Ref<HTMLButtonElement>;
+  disabled?: boolean;
 }
 
 const DatePicker = ({
@@ -30,6 +31,7 @@ const DatePicker = ({
   onChange,
   onBlur,
   inputRef,
+  disabled = false,
 }: DatePickerProps) => {
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (onChange) {
@@ -53,6 +55,7 @@ const DatePicker = ({
             "justify-between text-left ",
             "font-normal "
           )}
+          disabled={disabled}
         >
           {value ? format(value, "PPP") : <span>Pick a date</span>}
           <CalendarIcon />
@@ -64,6 +67,7 @@ const DatePicker = ({
           selected={value}
           defaultMonth={defaultValue}
           onSelect={handleDateSelect}
+          disabled={disabled}
         />
       </PopoverContent>
     </Popover>
