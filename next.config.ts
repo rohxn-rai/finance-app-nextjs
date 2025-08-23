@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["localhost:3000", process.env.REMOTE_TESTING!],
+    },
+  },
 };
 
 export default nextConfig;
