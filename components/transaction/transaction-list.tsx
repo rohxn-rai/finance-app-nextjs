@@ -20,7 +20,6 @@ const TransactionList = ({
   filter: FilterByTime;
 }) => {
   const [transactions, setTransactions] = useState(initialTransactions);
-  const [offset, setOffset] = useState(initialTransactions.length);
   const [isLoading, setIsLoading] = useState(false);
   const [removeButton, setRemoveButton] = useState(
     initialTransactions.length === 0
@@ -49,7 +48,6 @@ const TransactionList = ({
 
   const handleRemove = (id: string | number) => () => {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
-    setOffset((prev) => prev - 1);
   };
 
   return (
