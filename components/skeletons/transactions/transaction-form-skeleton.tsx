@@ -35,8 +35,8 @@ const TransactionFormSkeleton = () => {
           <Skeleton className="h-9 w-32" />
         </div>
         <div className="flex flex-row gap-4 justify-end">
-          <Skeleton className="h-9 w-20" />
-          <Skeleton className="h-9 w-20" />
+          <Skeleton className="h-9 w-20 bg-destructive" />
+          <Skeleton className="h-9 w-20 bg-chart-2" />
         </div>
       </div>
     </div>
