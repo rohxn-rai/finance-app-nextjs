@@ -38,12 +38,14 @@ import { toast } from "sonner";
 
 import { type Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import editTransactionAction from "@/actions/edit-transaction-action";
+import type { UUID } from "crypto";
 
 const EditTransactionForm = ({
   initialData,
 }: {
   initialData: {
-    id: string;
+    id: UUID;
     type: TypeOfTransaction;
     category: CategoryOfTransaction;
     created_at: Date;
@@ -90,7 +92,7 @@ const EditTransactionForm = ({
         amount: Number(data.amount),
       };
 
-      const result = await createTransactionAction(processedData);
+      const result = await editTransactionAction(initialData.id, processedData);
 
       if (!result.success) {
         throw new Error(result.error);
@@ -201,13 +203,12 @@ const EditTransactionForm = ({
               name="created_at"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel htmlFor="created_at">
-                    Date<span className="text-destructive">*</span>
-                  </FormLabel>
+                  <FormLabel htmlFor="created_at">Date</FormLabel>
                   <DatePicker
                     id="created_at"
                     {...field}
                     defaultValue={field.value}
+                    disabled
                   />
                   <FormMessage />
                 </FormItem>
@@ -279,7 +280,7 @@ const EditTransactionForm = ({
               >
                 Reset
               </Button>
-              <Button type="submit" disabled={isSaving}>
+              <Button variant="success" type="submit" disabled={isSaving}>
                 {isSaving ? "Saving ..." : "Save"}
               </Button>
             </div>
