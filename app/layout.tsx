@@ -30,8 +30,7 @@ const RootLayout = ({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main>{children}</main>
+          {children}
           <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
