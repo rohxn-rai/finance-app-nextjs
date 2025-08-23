@@ -23,7 +23,7 @@ const TransactionSummaryItem = ({
         {formattedAmount}
       </div>
 
-      <div className="hidden xs:flex min-w-[100px]"></div>
+      <div className="min-w-[50px] xs:min-w-[100px] "></div>
     </div>
   );
 };

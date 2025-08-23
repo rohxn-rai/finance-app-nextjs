@@ -57,7 +57,7 @@ const TransactionItem = ({
       <div className="flex flex-row gap-2 items-center grow">
         <IconComponent
           size={20}
-          className={`${colors} mr-2 min-h-5 min-w-5 hidden md:flex`}
+          className={`${colors} mr-2 min-h-5 min-w-5 hidden xs:flex`}
         />
         <span>{description}</span>
       </div>
@@ -68,14 +68,20 @@ const TransactionItem = ({
 
       <div className="min-w-[70px] text-right">{formattedAmount}</div>
 
-      <div className="min-w-[100px] flex justify-end">
-        <div className="flex flex-row gap-2 items-center">
+      <div className="min-w-[50px] xs:min-w-[100px] flex justify-end">
+        <div className="flex flex-col xs:flex-row gap-2 items-center">
           <Link href={`/dashboard/transaction/${id}/edit`}>
             <Button variant="outline" size="sm">
               <PencilLine />
             </Button>
           </Link>
-          <TransactionItemActionButton id={id} onRemove={onRemove(id)} />
+          <TransactionItemActionButton
+            id={id}
+            type={type}
+            description={description}
+            amount={amount}
+            onRemove={onRemove(id)}
+          />
         </div>
       </div>
     </li>
