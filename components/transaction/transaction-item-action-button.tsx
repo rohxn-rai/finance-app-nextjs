@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 
+import deleteTransaction from "@/actions/delete-transaction-action";
+
+import type { TypeOfTransaction } from "@/types/transaction";
+
+import PreviewTransactionItem from "@/components/transaction/preview-transaction-item";
 import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -16,14 +20,19 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { Loader2, Trash2 } from "lucide-react";
-import deleteTransaction from "@/actions/delete-transaction-action";
 import { toast } from "sonner";
 
 const TransactionItemActionButton = ({
   id,
+  type,
+  description,
+  amount,
   onRemove,
 }: {
   id: string | number;
+  type: TypeOfTransaction;
+  description: string;
+  amount: number;
   onRemove: Function;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,12 +71,16 @@ const TransactionItemActionButton = ({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete it?
+              Are you sure you want to delete?
             </AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your
-              transaction from our servers.
-            </AlertDialogDescription>
+            <ul className="p-4 ">
+              <PreviewTransactionItem
+                id={id}
+                type={type}
+                description={description}
+                amount={amount}
+              />
+            </ul>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
