@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const EditTransactionPageComponent = async ({
   params,
 }: {
-  params: { id: UUID };
+  params: Promise<{ id: UUID }>;
 }) => {
   const { id } = await params;
   const supabase = await createClient();
