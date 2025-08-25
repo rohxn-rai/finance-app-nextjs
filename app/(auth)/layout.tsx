@@ -9,8 +9,8 @@ const AuthenticationLayoutGroup = async ({
 }>) => {
   return (
     <>
-      <main>
-        <div className="absolute top-8 left-8">
+      <main className="flex flex-col gap-8">
+        <div className="sticky top-8 left-8">
           <Link href="/">
             <Button
               variant="ghost"
