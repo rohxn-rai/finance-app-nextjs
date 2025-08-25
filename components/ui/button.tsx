@@ -25,8 +25,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: cn(
-          "bg-primary/70 text-primary-foreground ",
-          "shadow-xs hover:bg-primary "
+          "bg-foreground/80 text-background ",
+          "shadow-xs hover:bg-foreground "
         ),
         success: cn(
           "bg-chart-2/70 text-background ",
