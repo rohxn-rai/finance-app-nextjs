@@ -1,8 +1,20 @@
 import Link from "next/link";
-import { ModeToggle } from "@/components/ui/theme-toggle";
-import { cn } from "@/lib/utils";
 
-const Header = () => {
+import { ModeToggle } from "@/components/ui/theme-toggle";
+
+import { cn } from "@/lib/utils";
+import { createClient } from "@/utils/supabase/server";
+import { Button } from "@/components/ui/button";
+import { CircleUser, KeyRound } from "lucide-react";
+
+const Header = async () => {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
   return (
     <header className="sticky top-0 pt-8 backdrop-blur-md mb-8">
       <div
@@ -23,7 +35,28 @@ const Header = () => {
 
         <div className="flex items-center gap-4">
           <ModeToggle />
-          <div>User Dropdown</div>
+          {user && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex flex-row gap-2 items-center"
+            >
+              <CircleUser className="w-6 h-6" />
+              <span>{user?.email}</span>
+            </Button>
+          )}
+          {!user && (
+            <Link href="/login">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex flex-row gap-2 items-center"
+              >
+                <KeyRound className="w-6 h-6" />
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
