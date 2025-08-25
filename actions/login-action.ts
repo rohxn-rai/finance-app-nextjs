@@ -22,7 +22,7 @@ const loginAction = async (prevState: LoginFormState, formData: FormData) => {
 
   return {
     title: "Email sent!",
-    message: `Check your email at ${email} for signin link.`,
+    message: `A signin link has been sent to you email (${email}).`,
     error: false,
   };
 };
