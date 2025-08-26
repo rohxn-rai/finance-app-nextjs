@@ -3,7 +3,10 @@ CREATE OR REPLACE FUNCTION fetch_transactions(
     limit_arg INT default 20,
     offset_arg INT default 0
 )
-RETURNS SETOF transactions AS $$
+RETURNS SETOF transactions 
+SECURITY DEFINER
+SET search_path = 'public, pg_temp'
+AS $$
 DECLARE
     startDate TIMESTAMP;
     endDate TIMESTAMP := NOW();

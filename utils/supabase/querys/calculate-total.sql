@@ -4,7 +4,10 @@ create or replace function calculate_total (
   -- The arguments (this one is optional, but arguments can be mandatory, just skip `default null`)
 	range_arg text default 'last30days',
 	type_arg text default null
-) returns table(current_amount numeric, previous_amount numeric) as $$ -- Returns number
+) returns table(current_amount numeric, previous_amount numeric)
+SECURITY DEFINER
+SET search_path = 'public, pg_temp'
+as $$ -- Returns number
 declare
 	currentStart timestamp;
 	currentEnd timestamp;
