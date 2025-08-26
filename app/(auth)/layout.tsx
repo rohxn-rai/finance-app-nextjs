@@ -1,12 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 
-const AuthenticationLayoutGroup = async ({
+import { Button } from "@/components/ui/button";
+
+import { ChevronLeft } from "lucide-react";
+
+const AuthenticationLayoutGroup = async ( {
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+} : Readonly<{
+  children : React.ReactNode;
+}> ) => {
   return (
     <>
       <main className="flex flex-col gap-8">
@@ -16,12 +19,12 @@ const AuthenticationLayoutGroup = async ({
               variant="ghost"
               className="flex flex-row items-center gap-2 text-sm"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4"/>
               <span>Back</span>
             </Button>
           </Link>
         </div>
-        <div className="mt-8">{children}</div>
+        <div className="mt-8">{ children }</div>
       </main>
     </>
   );

@@ -9,23 +9,22 @@ import { CircleUser, KeyRound } from "lucide-react";
 import LogoutButton from "@/components/logout-button";
 
 const Header = async () => {
-  const supabase = await createClient();
-
+  const supabase = await createClient ();
+  
   const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
+    data : { user }
+  } = await supabase.auth.getUser ();
+  
   return (
     <header className="sticky top-0 pt-8 backdrop-blur-md mb-8">
       <div
-        className={cn(
+        className={ cn (
           "border border-input mx-4 ",
           "bg-popover px-4 py-2 rounded-md ",
           "flex flex-row justify-between ",
           "items-center ",
           "border border-input "
-        )}
+        ) }
       >
         <Link
           href="/dashboard"
@@ -33,32 +32,32 @@ const Header = async () => {
         >
           Finance App
         </Link>
-
+        
         <div className="flex items-center gap-4">
-          <ModeToggle />
-          {user && (
+          <ModeToggle/>
+          { user && (
             <Button
               variant="ghost"
               size="sm"
               className="flex flex-row gap-2 items-center"
             >
-              <CircleUser className="w-6 h-6" />
-              <span>{user?.email}</span>
+              <CircleUser className="w-6 h-6"/>
+              <span>{ user?.email }</span>
             </Button>
-          )}
-          {user && <LogoutButton />}
-          {!user && (
+          ) }
+          { user && <LogoutButton/> }
+          { !user && (
             <Link href="/login">
               <Button
                 variant="ghost"
                 size="sm"
                 className="flex flex-row gap-2 items-center"
               >
-                <KeyRound className="w-6 h-6" />
+                <KeyRound className="w-6 h-6"/>
                 Login
               </Button>
             </Link>
-          )}
+          ) }
         </div>
       </div>
     </header>

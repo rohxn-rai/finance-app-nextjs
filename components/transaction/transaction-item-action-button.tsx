@@ -6,7 +6,8 @@ import deleteTransaction from "@/actions/delete-transaction-action";
 
 import type { TypeOfTransaction } from "@/types/transaction";
 
-import PreviewTransactionItem from "@/components/transaction/preview-transaction-item";
+import PreviewTransactionItem
+  from "@/components/transaction/preview-transaction-item";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,50 +24,51 @@ import { Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import type { UUID } from "crypto";
 
-const TransactionItemActionButton = ({
+const TransactionItemActionButton = ( {
   id,
   type,
   description,
   amount,
   onRemove,
-}: {
-  id: UUID | number;
-  type: TypeOfTransaction;
-  description: string;
-  amount: number;
-  onRemove: Function;
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+} : {
+  id : UUID | number;
+  type : TypeOfTransaction;
+  description : string;
+  amount : number;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  onRemove : Function;
+} ) => {
+  const [ isLoading, setIsLoading ] = useState ( false );
+  
   const handleDelete = async () => {
-    setIsLoading(true);
-    toast.loading("Deleting transaction ...", {
-      id: `delete:transaction-${id}`,
-    });
+    setIsLoading ( true );
+    toast.loading ( "Deleting transaction ...", {
+      id : `delete:transaction-${ id }`,
+    } );
     try {
-      if (typeof id === "string") {
-        await deleteTransaction(id);
-        onRemove();
+      if ( typeof id !== "number" ) {
+        await deleteTransaction ( id );
+        onRemove ();
       }
-
-      toast.dismiss(`delete:transaction-${id}`);
-      toast.success("Transaction has been deleted!");
-    } catch (error) {
-      toast.dismiss(`delete:transaction-${id}`);
-      toast.error(
+      
+      toast.dismiss ( `delete:transaction-${ id }` );
+      toast.success ( "Transaction has been deleted!" );
+    } catch ( error ) {
+      toast.dismiss ( `delete:transaction-${ id }` );
+      toast.error (
         error instanceof Error ? error.message : "An unexpected error occurred"
       );
     } finally {
-      setIsLoading(false);
+      setIsLoading ( false );
     }
   };
-
+  
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm" disabled={isLoading}>
-            <Trash2 />
+          <Button variant="destructive" size="sm" disabled={ isLoading }>
+            <Trash2/>
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -76,9 +78,9 @@ const TransactionItemActionButton = ({
             </AlertDialogTitle>
             <ul className="p-4 ">
               <PreviewTransactionItem
-                type={type}
-                description={description}
-                amount={amount}
+                type={ type }
+                description={ description }
+                amount={ amount }
               />
             </ul>
           </AlertDialogHeader>
@@ -88,10 +90,10 @@ const TransactionItemActionButton = ({
               <Button
                 className="flex flex-row gap-2"
                 variant="destructive"
-                onClick={handleDelete}
-                disabled={isLoading}
+                onClick={ handleDelete }
+                disabled={ isLoading }
               >
-                {isLoading && <Loader2 className="animate-spin" />}
+                { isLoading && <Loader2 className="animate-spin"/> }
                 Delete
               </Button>
             </AlertDialogAction>

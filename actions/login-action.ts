@@ -3,27 +3,27 @@
 import type { LoginFormState } from "@/types/base-custom";
 import { createClient } from "@/utils/supabase/server";
 
-const loginAction = async (prevState: LoginFormState, formData: FormData) => {
-  const supabase = await createClient();
-  const email = formData.get("email") as string;
-  const { data, error } = await supabase.auth.signInWithOtp({
+const loginAction = async ( prevState : LoginFormState, formData : FormData ) => {
+  const supabase = await createClient ();
+  const email = formData.get ( "email" ) as string;
+  const { error } = await supabase.auth.signInWithOtp ( {
     email,
-    options: {
-      shouldCreateUser: true,
+    options : {
+      shouldCreateUser : true,
     },
-  });
-  if (error) {
+  } );
+  if ( error ) {
     return {
-      title: "Error authenicating!",
-      message: error.message || "Servers might be down.",
-      error: true,
+      title : "Error authenticating!",
+      message : error.message || "Servers might be down.",
+      error : true,
     };
   }
-
+  
   return {
-    title: "Email sent!",
-    message: `A signin link has been sent to you email (${email}).`,
-    error: false,
+    title : "Email sent!",
+    message : `A signin link has been sent to you email (${ email }).`,
+    error : false,
   };
 };
 

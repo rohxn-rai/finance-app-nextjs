@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import createTransactionAction from "@/actions/create-transaction-action";
+import editTransactionAction from "@/actions/edit-transaction-action";
 
 import {
   CATEGORYOFTRANSACTION,
@@ -38,187 +38,188 @@ import { toast } from "sonner";
 
 import { type Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import editTransactionAction from "@/actions/edit-transaction-action";
 import type { UUID } from "crypto";
 
-const EditTransactionForm = ({
+const EditTransactionForm = ( {
   initialData,
-}: {
-  initialData: {
-    id: UUID;
-    type: TypeOfTransaction;
-    category: CategoryOfTransaction;
-    created_at: Date;
-    amount: number;
-    description: string;
+} : {
+  initialData : {
+    id : UUID;
+    type : TypeOfTransaction;
+    category : CategoryOfTransaction;
+    created_at : Date;
+    amount : number;
+    description : string;
   };
-}) => {
-  const router = useRouter();
-
-  const [isSaving, setIsSaving] = useState(false);
-
-  const form = useForm<AddTransaction, object, AddTransaction>({
-    resolver: zodResolver(TransactionSchema) as Resolver<
+} ) => {
+  const router = useRouter ();
+  
+  const [ isSaving, setIsSaving ] = useState ( false );
+  
+  const form = useForm<AddTransaction, object, AddTransaction> ( {
+    resolver : zodResolver ( TransactionSchema ) as Resolver<
       AddTransaction,
       object,
       AddTransaction
     >,
-    mode: "all",
-    defaultValues: {
+    mode : "all",
+    defaultValues : {
       ...initialData,
-      created_at: new Date(
-        new Date(initialData.created_at).toISOString().split("T")[0] +
-          "T00:00:00.000Z"
+      created_at : new Date (
+        new Date ( initialData.created_at ).toISOString ().split ( "T" )[0] +
+        "T00:00:00.000Z"
       ),
     },
-    reValidateMode: "onChange",
-  });
-
-  const type = form.watch("type");
-
-  const onSubmit: SubmitHandler<AddTransaction> = async (
-    data: AddTransaction
+    reValidateMode : "onChange",
+  } );
+  
+  const type = form.watch ( "type" );
+  
+  const onSubmit : SubmitHandler<AddTransaction> = async (
+    data : AddTransaction
   ) => {
-    setIsSaving(true);
-
-    const randId = Math.random();
-    toast.loading("Processing...", {
-      id: `create:transaction-${randId}`,
-    });
-
+    setIsSaving ( true );
+    
+    const randId = Math.random ();
+    toast.loading ( "Processing...", {
+      id : `create:transaction-${ randId }`,
+    } );
+    
     try {
       const processedData = {
         ...data,
-        amount: Number(data.amount),
+        amount : Number ( data.amount ),
       };
-
-      const result = await editTransactionAction(initialData.id, processedData);
-
-      if (!result.success) {
-        throw new Error(result.error);
+      
+      const result = await editTransactionAction ( initialData.id, processedData );
+      
+      if ( !result.success ) {
+        throw new Error ( result.error );
       }
-      toast.dismiss(`create:transaction-${randId}`);
-
-      toast.success("Transaction saved successfully.");
-
-      router.push("/dashboard");
-    } catch (err) {
-      toast.dismiss(`create:transaction-${randId}`);
-      toast.error(
+      toast.dismiss ( `create:transaction-${ randId }` );
+      
+      toast.success ( "Transaction saved successfully." );
+      
+      router.push ( "/dashboard" );
+    } catch ( err ) {
+      toast.dismiss ( `create:transaction-${ randId }` );
+      toast.error (
         err instanceof Error ? err.message : "An unexpected error occurred"
       );
     } finally {
-      setIsSaving(false);
+      setIsSaving ( false );
     }
   };
-
+  
   const handleReset = () => {
-    form.reset({
+    form.reset ( {
       ...initialData,
-      created_at: new Date(
-        new Date(initialData.created_at).toISOString().split("T")[0] +
-          "T00:00:00.000Z"
+      created_at : new Date (
+        new Date ( initialData.created_at ).toISOString ().split ( "T" )[0] +
+        "T00:00:00.000Z"
       ),
-    });
-
-    toast.success("Reset the form!");
+    } );
+    
+    toast.success ( "Reset the form!" );
   };
-
+  
   return (
     <>
-      <Form {...form}>
+      <Form { ...form }>
         <form
           className="flex flex-col gap-4"
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={ form.handleSubmit ( onSubmit ) }
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FormField
-              control={form.control}
+              control={ form.control }
               name="type"
-              render={({ field }) => (
+              render={ ( { field } ) => (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel htmlFor="type">
                     Type<span className="text-destructive">*</span>
                   </FormLabel>
                   <Select
-                    value={field.value}
-                    onValueChange={(value: TypeOfTransaction) => {
-                      field.onChange(value);
-
-                      if (value !== "Expense") {
-                        form.setValue("category", "");
+                    value={ field.value }
+                    onValueChange={ ( value : TypeOfTransaction ) => {
+                      field.onChange ( value );
+                      
+                      if ( value !== "Expense" ) {
+                        form.setValue ( "category", "" );
                       }
-                    }}
+                    } }
                   >
                     <SelectTrigger id="type">
-                      <SelectValue placeholder="Select type of transaction ..." />
+                      <SelectValue
+                        placeholder="Select type of transaction ..."/>
                     </SelectTrigger>
                     <SelectContent>
-                      {TYPEOFTRANSACTION.map((type) => (
-                        <SelectItem value={type} key={type}>
-                          {type}
+                      { TYPEOFTRANSACTION.map ( ( type ) => (
+                        <SelectItem value={ type } key={ type }>
+                          { type }
                         </SelectItem>
-                      ))}
+                      ) ) }
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
-              )}
+              ) }
             />
-
+            
             <FormField
-              control={form.control}
+              control={ form.control }
               name="category"
-              render={({ field }) => (
+              render={ ( { field } ) => (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel htmlFor="category">
                     Category
-                    {type === "Expense" && (
+                    { type === "Expense" && (
                       <span className="text-destructive">*</span>
-                    )}
+                    ) }
                   </FormLabel>
                   <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    disabled={type !== "Expense"}
+                    value={ field.value }
+                    onValueChange={ field.onChange }
+                    disabled={ type !== "Expense" }
                   >
                     <SelectTrigger id="category">
-                      <SelectValue placeholder="Select category of transactions ..." />
+                      <SelectValue
+                        placeholder="Select category of transactions ..."/>
                     </SelectTrigger>
                     <SelectContent>
-                      {CATEGORYOFTRANSACTION.map((type) => (
-                        <SelectItem value={type} key={type}>
-                          {type}
+                      { CATEGORYOFTRANSACTION.map ( ( type ) => (
+                        <SelectItem value={ type } key={ type }>
+                          { type }
                         </SelectItem>
-                      ))}
+                      ) ) }
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
-              )}
+              ) }
             />
-
+            
             <FormField
-              control={form.control}
+              control={ form.control }
               name="created_at"
-              render={({ field }) => (
+              render={ ( { field } ) => (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel htmlFor="created_at">Date</FormLabel>
                   <DatePicker
                     id="created_at"
-                    {...field}
-                    defaultValue={field.value}
+                    { ...field }
+                    defaultValue={ field.value }
                     disabled
                   />
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
-              )}
+              ) }
             />
-
+            
             <FormField
-              control={form.control}
+              control={ form.control }
               name="amount"
-              render={({ field }) => (
+              render={ ( { field } ) => (
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel htmlFor="amount">
                     Amount<span className="text-destructive">*</span>
@@ -232,40 +233,40 @@ const EditTransactionForm = ({
                       type="number"
                       placeholder="999.99"
                       className="pl-8"
-                      value={field.value ?? ""}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      value={ field.value ?? "" }
+                      onChange={ ( e : ChangeEvent<HTMLInputElement> ) => {
                         const value = e.target.value;
-                        field.onChange(
-                          value === "" ? undefined : Number(value)
+                        field.onChange (
+                          value === "" ? undefined : Number ( value )
                         );
-                      }}
-                      onBlur={field.onBlur}
-                      name={field.name}
+                      } }
+                      onBlur={ field.onBlur }
+                      name={ field.name }
                     />
                   </div>
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
-              )}
+              ) }
             />
-
+            
             <FormField
-              control={form.control}
+              control={ form.control }
               name="description"
-              render={({ field }) => (
+              render={ ( { field } ) => (
                 <FormItem className="md:col-span-2 flex flex-col gap-2">
                   <FormLabel htmlFor="description">Description</FormLabel>
                   <Textarea
                     id="description"
-                    rows={2}
+                    rows={ 2 }
                     placeholder="Enter Description ..."
-                    {...field}
+                    { ...field }
                   />
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
-              )}
+              ) }
             />
           </div>
-
+          
           <div className="flex flex-col md:flex-row gap-2 justify-between">
             <div className="flex flex-row items-center text-xs">
               <span className="text-destructive">*</span>
@@ -275,13 +276,13 @@ const EditTransactionForm = ({
               <Button
                 variant="destructive"
                 type="button"
-                onClick={handleReset}
-                disabled={isSaving}
+                onClick={ handleReset }
+                disabled={ isSaving }
               >
                 Reset
               </Button>
-              <Button variant="success" type="submit" disabled={isSaving}>
-                {isSaving ? "Saving ..." : "Save"}
+              <Button variant="success" type="submit" disabled={ isSaving }>
+                { isSaving ? "Saving ..." : "Save" }
               </Button>
             </div>
           </div>
