@@ -1,7 +1,9 @@
+import dotenv from "dotenv";
+
+import type { UUID } from "crypto";
+
 import { createClient } from "@supabase/supabase-js";
 import { faker } from "@faker-js/faker";
-
-import dotenv from "dotenv";
 
 dotenv.config({
   path: ".env",
@@ -25,6 +27,7 @@ interface Transaction {
   type: TypeOfTransaction;
   category: CategoryOfTransaction;
   description: string;
+  user_id: UUID;
 }
 
 const supabase = createClient(
@@ -41,14 +44,47 @@ const categories: CategoryOfTransaction[] = [
   "Other",
 ];
 
+const seedUsers = async () => {
+  for (let i = 0; i < 5; i++) {
+    try {
+      const { error } = await supabase.auth.admin.createUser({
+        email: faker.internet.email(),
+        password: "Password",
+      });
+
+      if (error) throw new Error(error.message);
+
+      console.log(`User ${i + 1} was added`);
+    } catch (e) {
+      console.error("Error adding user");
+    }
+  }
+};
+
 const seed = async () => {
+  await seedUsers();
+
   const transactions: Transaction[] = [];
 
-  for (let i = 0; i < 10; i++) {
+  const {
+    data: { users },
+    error: ListUsers,
+  } = await supabase.auth.admin.listUsers();
+
+  const userIds: UUID[] = users?.map((user) => user.id as UUID);
+
+  if (ListUsers) {
+    console.error("Cannot list users, aborting!");
+    return;
+  }
+
+  for (let i = 0; i < 100; i++) {
     const created_at = faker.date.past();
 
     let type: TypeOfTransaction,
       category: CategoryOfTransaction = "";
+
+    const user_id = faker.helpers.arrayElement(userIds);
 
     const typeBias = Math.random();
 
@@ -92,6 +128,7 @@ const seed = async () => {
       type,
       description: faker.lorem.sentence(),
       category,
+      user_id,
     });
   }
 
