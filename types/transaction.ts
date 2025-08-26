@@ -9,6 +9,7 @@ export type FilterByTime =
   | "today"
   | "last7days"
   | "last30days"
+  | "last3months"
   | "last12months";
 
 export interface SupabaseTrendData {

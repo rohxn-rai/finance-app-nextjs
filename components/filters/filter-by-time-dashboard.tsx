@@ -17,7 +17,7 @@ const FilterByTimeRecent = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const filter = (searchParams.get("filter") as FilterByTime) ?? "last30days";
+  const filter = (searchParams.get("filter") as FilterByTime) ?? "last3months";
 
   const handleChange = (newFilter: FilterByTime) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -40,6 +40,7 @@ const FilterByTimeRecent = () => {
           <SelectItem value="last24hours">Last 24 hours</SelectItem>
           <SelectItem value="last7days">Last 7 days</SelectItem>
           <SelectItem value="last30days">Last 30 days</SelectItem>
+          <SelectItem value="last3months">Last 3 months </SelectItem>
           <SelectItem value="last12months">Last 12 months </SelectItem>
         </SelectContent>
       </Select>

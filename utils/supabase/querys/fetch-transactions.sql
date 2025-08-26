@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION fetch_transactions(
-    range_arg VARCHAR default 'last30days',
+    range_arg VARCHAR default 'last3months',
     limit_arg INT default 20,
     offset_arg INT default 0
 )
@@ -16,6 +16,8 @@ BEGIN
             startDate := NOW() - INTERVAL '7 days';
         WHEN 'last30days' THEN
             startDate := NOW() - INTERVAL '30 days';
+        WHEN 'last3months' THEN
+            startDate := NOW() - INTERVAL '3 months';
         WHEN 'last12months' THEN
             startDate := NOW() - INTERVAL '12 months';
         ELSE

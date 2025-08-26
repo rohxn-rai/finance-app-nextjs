@@ -6,29 +6,29 @@ import {
 } from "@/types/transaction";
 import { createClient } from "@/utils/supabase/server";
 
-const Trend = async ( {
+const Trend = async ({
   type,
-  filter = "last30days",
-} : {
-  type : TypeOfTransaction;
-  filter : FilterByTime;
-} ) => {
-  const supabase = await createClient ();
-  
-  const { data, error } = await supabase.rpc ( "calculate_total", {
-    range_arg : filter,
-    type_arg : type,
-  } );
-  
-  if ( error ) console.error ( error );
-  
-  const amounts : SupabaseTrendData = data[0];
-  
+  filter = "last3months",
+}: {
+  type: TypeOfTransaction;
+  filter: FilterByTime;
+}) => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.rpc("calculate_total", {
+    range_arg: filter,
+    type_arg: type,
+  });
+
+  if (error) console.error(error);
+
+  const amounts: SupabaseTrendData = data[0];
+
   return (
     <BaseTrend
-      type={ type }
-      amount={ amounts.current_amount }
-      prevAmount={ amounts.previous_amount }
+      type={type}
+      amount={amounts.current_amount}
+      prevAmount={amounts.previous_amount}
     />
   );
 };

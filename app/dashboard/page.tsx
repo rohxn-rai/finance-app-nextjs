@@ -15,7 +15,7 @@ const DashboardPage = async ({
 }: {
   searchParams: Promise<{ [filter: string]: FilterByTime | undefined }>;
 }) => {
-  const { filter = "last30days" } = await searchParams;
+  const { filter = "last3months" } = await searchParams;
 
   return (
     <>
