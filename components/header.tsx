@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "@/components/ui/button";
 import { CircleUser, KeyRound } from "lucide-react";
+import LogoutButton from "@/components/logout-button";
 
 const Header = async () => {
   const supabase = await createClient();
@@ -45,6 +46,7 @@ const Header = async () => {
               <span>{user?.email}</span>
             </Button>
           )}
+          {user && <LogoutButton />}
           {!user && (
             <Link href="/login">
               <Button
