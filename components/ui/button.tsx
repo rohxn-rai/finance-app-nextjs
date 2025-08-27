@@ -46,6 +46,15 @@ const buttonVariants = cva(
           "dark:bg-destructive/60 ",
           "dark:hover:bg-destructive/90 "
         ),
+        yellow: cn(
+          "bg-chart-3/70 text-background ",
+          "dark:text-foreground shadow-xs ",
+          "dark:bg-chart-3/60 ",
+          "hover:bg-chart-3 dark:text-foreground",
+          "focus-visible:ring-chart-3/20 ",
+          "dark:focus-visible:ring-chart-3/40 ",
+          "dark:hover:bg-chart-3/90 "
+        ),
         outline: cn(
           "border border-input bg-background shadow-xs ",
           "hover:bg-accent hover:text-accent-foreground ",
