@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 
-import type { UserMetadata } from "@supabase/supabase-js";
-
 import type { FilterByTime } from "@/types/transaction";
-import { UserSettings, type UpdateUserSettings } from "@/types/user-settings";
+import {
+  UserSettings,
+  type GetUpdatedSetings,
+  type UpdateUserSettings,
+} from "@/types/user-settings";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -30,13 +32,7 @@ import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UpdatingUserSettings from "@/actions/updating-user-settings";
 
-const SettingsForm = ({
-  defaults,
-}: {
-  defaults:
-    | (UserMetadata & { fullName: string; defaultView: FilterByTime })
-    | null;
-}) => {
+const SettingsForm = ({ defaults }: { defaults?: GetUpdatedSetings }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const form = useForm<UpdateUserSettings, object, UpdateUserSettings>({
     resolver: zodResolver(UserSettings) as Resolver<
