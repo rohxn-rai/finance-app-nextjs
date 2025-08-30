@@ -6,7 +6,7 @@ import {
 import type { UUID } from "crypto";
 
 export type FilterByTime =
-  | "today"
+  | "last24hours"
   | "last7days"
   | "last30days"
   | "last3months"
