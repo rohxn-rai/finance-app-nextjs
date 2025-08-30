@@ -8,7 +8,7 @@ const SettingsLandingPage = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let defaults: GetUpdatedSetings = user?.user_metadata?.settings ?? {};
+  const defaults: GetUpdatedSetings = user?.user_metadata?.settings ?? {};
 
   return (
     <>
