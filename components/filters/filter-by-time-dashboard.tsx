@@ -2,6 +2,11 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import { Suspense } from "react";
+
+import type { FilterByTime } from "@/types/transaction";
+
+import { Skeleton } from "../ui/skeleton";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -10,14 +15,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { FilterByTime } from "@/types/transaction";
 
-const FilterByTimeRecent = () => {
+const FilterByTimeRecent = ({ defaultView }: { defaultView: FilterByTime }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const filter = (searchParams.get("filter") as FilterByTime) ?? "last3months";
+  const filter =
+    (searchParams.get("filter") as FilterByTime) ??
+    defaultView ??
+    "last3months";
 
   const handleChange = (newFilter: FilterByTime) => {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -32,18 +39,20 @@ const FilterByTimeRecent = () => {
       <Label htmlFor="filter" className="cursor-pointer">
         Filter
       </Label>
-      <Select value={filter} onValueChange={handleChange}>
-        <SelectTrigger id="filter" className="w-[200px]">
-          <SelectValue placeholder="Select Filter by time ..." />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="last24hours">Last 24 hours</SelectItem>
-          <SelectItem value="last7days">Last 7 days</SelectItem>
-          <SelectItem value="last30days">Last 30 days</SelectItem>
-          <SelectItem value="last3months">Last 3 months </SelectItem>
-          <SelectItem value="last12months">Last 12 months </SelectItem>
-        </SelectContent>
-      </Select>
+      <Suspense fallback={<Skeleton className="w-[200px] h-9" />}>
+        <Select value={filter} onValueChange={handleChange}>
+          <SelectTrigger id="filter" className="w-[200px]">
+            <SelectValue placeholder="Select Filter by time ..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="last24hours">Last 24 hours</SelectItem>
+            <SelectItem value="last7days">Last 7 days</SelectItem>
+            <SelectItem value="last30days">Last 30 days</SelectItem>
+            <SelectItem value="last3months">Last 3 months </SelectItem>
+            <SelectItem value="last12months">Last 12 months </SelectItem>
+          </SelectContent>
+        </Select>
+      </Suspense>
     </aside>
   );
 };
