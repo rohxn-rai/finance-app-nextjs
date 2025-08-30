@@ -68,7 +68,9 @@ const Header = async () => {
                     )}
                   </AvatarFallback>
                 </Avatar>
-                <span>{user?.user_metadata?.fullName ?? user?.email}</span>
+                <span>
+                  {user?.user_metadata?.settings?.fullName ?? user?.email}
+                </span>
               </Button>
             </Link>
           )}
