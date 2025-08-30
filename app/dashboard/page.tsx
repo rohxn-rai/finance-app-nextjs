@@ -28,7 +28,8 @@ const DashboardPage = async ({
 
   let defaultView: FilterByTime = "last3months";
 
-  if (!error) defaultView = user?.user_metadata?.defaultView ?? "last3months";
+  if (!error)
+    defaultView = user?.user_metadata?.settings?.defaultView ?? "last3months";
 
   const filter: FilterByTime = params?.filter ?? defaultView;
 
