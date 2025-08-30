@@ -1,15 +1,29 @@
-import { CategoryOfTransaction, TypeOfTransaction } from "@/types/transaction";
+import {
+  CategoryOfTransaction,
+  TypeOfTransaction,
+  type FilterByTime,
+} from "@/types/transaction";
 
-export const TYPEOFTRANSACTION : TypeOfTransaction[] = [
+export const TYPEOFTRANSACTION: TypeOfTransaction[] = [
   "Income",
   "Expense",
   "Investment",
-  "Saving" ]
+  "Saving",
+];
 
-export const CATEGORYOFTRANSACTION : CategoryOfTransaction[] = [
+export const CATEGORYOFTRANSACTION: CategoryOfTransaction[] = [
   "Housing",
   "Transport",
   "Health",
   "Food",
   "Education",
-  "Other" ]
+  "Other",
+];
+
+export const FILTERBYTIME: FilterByTime[] = [
+  "last24hours",
+  "last7days",
+  "last30days",
+  "last3months",
+  "last12months",
+];
