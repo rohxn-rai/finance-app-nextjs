@@ -34,10 +34,7 @@ const DatePicker = ({
   disabled = false,
 }: DatePickerProps) => {
   const handleDateSelect = (selectedDate: Date | undefined) => {
-    if (onChange) {
-      onChange(selectedDate);
-      console.log(selectedDate);
-    }
+    if (onChange) onChange(selectedDate);
   };
 
   return (
