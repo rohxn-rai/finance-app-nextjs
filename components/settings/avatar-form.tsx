@@ -10,12 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
 
 import { getCroppedImg } from "@/lib/crop";
 import { cn } from "@/lib/utils";
 
-import { CheckCircle, SquarePen, Upload } from "lucide-react";
+import { AlertCircleIcon, CheckCircle, SquarePen, Upload } from "lucide-react";
 
 const UploadAvatarForm = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -28,15 +29,18 @@ const UploadAvatarForm = () => {
   const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     toast.loading("Uploading avatar ...", { id: "upload:imagetoweb" });
+    setAlertMessage(null);
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
       const fileExt = file.name.split(".").pop()?.toLowerCase();
       if (!fileExt || !["jpeg", "jpg", "png", "webp"].includes(fileExt)) {
         toast.dismiss("upload:imagetoweb");
+        setAlertMessage("Please select a JPEG, PNG, or WebP image file");
         toast.error("Please select a JPEG, PNG, or WebP image file");
         e.target.value = "";
         return;
@@ -45,6 +49,7 @@ const UploadAvatarForm = () => {
       const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         toast.dismiss("upload:imagetoweb");
+        setAlertMessage("File size must be less than 5MB");
         toast.error("File size must be less than 5MB");
         e.target.value = "";
         return;
@@ -138,6 +143,7 @@ const UploadAvatarForm = () => {
         error instanceof Error
           ? error.message
           : "Upload failed. Please try again.";
+      setAlertMessage(errorMessage);
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
@@ -157,12 +163,18 @@ const UploadAvatarForm = () => {
     setCrop({ x: 0, y: 0 });
     setZoom(1);
     toast.success("Cleared!");
+    setAlertMessage(null);
   };
 
   return (
     <form onSubmit={onUpload} className="grid gap-4">
       <>
-        {}
+        {alertMessage && (
+          <Alert variant="destructive">
+            <AlertCircleIcon />
+            <AlertDescription>{alertMessage}</AlertDescription>
+          </Alert>
+        )}
         {imageSrc && !croppedImage && (
           <>
             <div
