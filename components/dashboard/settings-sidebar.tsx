@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 
-import { Camera, Settings, User } from "lucide-react";
+import { Camera, Settings } from "lucide-react";
 
 const items = [
   {

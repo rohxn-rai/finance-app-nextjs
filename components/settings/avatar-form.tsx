@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
-import Cropper from "react-easy-crop";
+import Cropper, { Area } from "react-easy-crop";
 
 import uploadAvatar from "@/actions/upload-avatar";
 
@@ -24,7 +24,7 @@ const UploadAvatarForm = () => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [zoomInput, setZoomInput] = useState<string>(zoom.toFixed(2));
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +75,7 @@ const UploadAvatarForm = () => {
     toast.warning("An image needs to be uploaded!");
   };
 
-  const onCropComplete = useCallback((_: any, areaPixels: any) => {
+  const onCropComplete = useCallback((_: Area, areaPixels: Area) => {
     setCroppedAreaPixels(areaPixels);
   }, []);
 
