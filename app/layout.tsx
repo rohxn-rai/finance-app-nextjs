@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Finance App",
-    default: "Finance App",
+    template: "%s | Finance Tracker",
+    default: "Finance Tracker",
   },
   description: "Create and manage your finances!",
 };

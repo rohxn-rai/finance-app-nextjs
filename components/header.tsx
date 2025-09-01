@@ -38,8 +38,8 @@ const Header = async () => {
         className={cn(
           "border border-input mx-4 ",
           "bg-popover px-4 py-2 rounded-md ",
-          "flex flex-row justify-between ",
-          "items-center ",
+          "flex flex-col xs:flex-row ",
+          "justify-between items-center ",
           "border border-input "
         )}
       >
@@ -47,10 +47,10 @@ const Header = async () => {
           href="/dashboard"
           className="text-xl hover:underline underline-offset-8 decoration-2"
         >
-          Finance App
+          Finance Tracker
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <ModeToggle />
           {user && (
             <Link href="/dashboard/settings">
@@ -68,7 +68,7 @@ const Header = async () => {
                     )}
                   </AvatarFallback>
                 </Avatar>
-                <span>
+                <span className=" not-xs:hidden">
                   {user?.user_metadata?.settings?.fullName ?? user?.email}
                 </span>
               </Button>
