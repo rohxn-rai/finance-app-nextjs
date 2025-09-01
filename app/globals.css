@@ -28,6 +28,7 @@ main {
 }
 
 footer {
+  @apply container mx-auto max-w-4xl px-8;
   scrollbar-gutter: stable;
 }
 
