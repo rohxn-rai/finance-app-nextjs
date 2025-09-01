@@ -23,7 +23,7 @@ header {
 }
 
 main {
-  @apply container mx-auto max-w-4xl px-8 min-h-[cal(100dvh-86px)];
+  @apply container mx-auto max-w-4xl px-8 pb-6 min-h-[cal(100dvh-86px)];
   scrollbar-gutter: stable;
 }
 
