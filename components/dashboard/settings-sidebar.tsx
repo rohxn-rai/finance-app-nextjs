@@ -28,11 +28,6 @@ const items = [
     url: "/dashboard/settings/avatar",
     icon: Camera,
   },
-  {
-    title: "Profile",
-    url: "/dashboard/settings/profile",
-    icon: User,
-  },
 ];
 
 const SettingsSidebar = () => {
